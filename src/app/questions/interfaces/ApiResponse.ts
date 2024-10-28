@@ -1,6 +1,6 @@
 import { Question } from "./Questions";
 
 export interface ApiResponse {
-    data: Question[];
+    questions: Question[];
     message: string;
   }

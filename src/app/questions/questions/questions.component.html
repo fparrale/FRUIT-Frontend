@@ -1,52 +1,60 @@
-<div *ngIf="currentQuestion">
+<div id="containerQuestions" *ngIf="currentQuestion">
+    <h1>Pregunta #{{ currentQuestionIndex + 1 }}</h1>
     <h3>{{ currentQuestion.nfr }}</h3>
   
-    <div id="question-words-container" cdkDropList #questionList="cdkDropList"
-        [cdkDropListData]="questionWords"
-        [cdkDropListConnectedTo]="[variableList, valueList, recomendedValuesist]" (cdkDropListDropped)="drop($event)">
-        @for (item of questionWords; track item) {
-            <div class="example-box" cdkDrag>{{item}}</div>
-          }
-      </div>
+    <div>
+        <label for="nfr">NFR:</label>
+        <div id="question-words-container" cdkDropList cdkDropListOrientation="horizontal" #questionList="cdkDropList"
+            [cdkDropListData]="questionWords"
+            [cdkDropListConnectedTo]="[variableList, valueList, recomendedValuesist]"
+            class="example-list" (cdkDropListDropped)="drop($event)" >
+            @for (item of questionWords; track item) {
+                <div class="example-box" cdkDrag (cdkDragMoved)="onDragMove(item)">{{item}}</div>
+              }
+          </div>
+    </div>
       
 
     <div>
         <label for="variable">Variable:</label>
-        <div id="variable-container" cdkDropList #variableList="cdkDropList"
+        <div id="variable-container" cdkDropList cdkDropListOrientation="horizontal" #variableList="cdkDropList"
             [cdkDropListData]="variable"
-            [cdkDropListConnectedTo]="[questionList]"
+            [cdkDropListConnectedTo]="[questionList, valueList, recomendedValuesist]"
+            class="example-list"
             (cdkDropListDropped)="drop($event)">
             @for (item of variable; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
+                <div class="example-box" cdkDrag (cdkDragMoved)="onDragMove(item)">{{item}}</div>
             }
         </div>
     </div>
 
     <div>
         <label for="value">Value:</label>
-        <div id="value-container" cdkDropList #valueList="cdkDropList"
+        <div id="value-container" cdkDropList cdkDropListOrientation="horizontal" #valueList="cdkDropList"
             [cdkDropListData]="value"
-            [cdkDropListConnectedTo]="[questionList]"
+            [cdkDropListConnectedTo]="[questionList, variableList, recomendedValuesist]"
             (cdkDropListDropped)="drop($event)">
             @for (item of value; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
+                <div class="example-box" cdkDrag (cdkDragMoved)="onDragMove(item)">{{item}}</div>
             }
         </div>
     </div>
 
     <div>
         <label for="RecomendedValues">Recomended Values:</label>
-        <div id="variable-container" cdkDropList #recomendedValuesist="cdkDropList"
+        <div id="variable-container" cdkDropList cdkDropListOrientation="horizontal" #recomendedValuesist="cdkDropList"
             [cdkDropListData]="recomend"
-            [cdkDropListConnectedTo]="[questionList]"
+            [cdkDropListConnectedTo]="[questionList, variableList, valueList]"
             (cdkDropListDropped)="drop($event)">
             @for (item of recomend; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
+                <div class="example-box" cdkDrag (cdkDragMoved)="onDragMove(item)">{{item}}</div>
             }
         </div>
     </div>
   
-    <button (click)="previousQuestion()">Anterior</button>
-    <button (click)="nextQuestion()">Siguiente</button>
+    <div *ngIf="currentQuestionIndex > 0">
+        <button mat-raised-button color="primary" (click)="previousQuestion()">Anterior</button>
+      </div>
+    <button mat-raised-button color="primary" (click)="againQuestion()">Siguiente</button>
 </div>
 
