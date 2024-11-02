@@ -15,7 +15,7 @@ phases:
   build:
     commands:
         - echo Build started 
-        - node -v
+        - npm install
         - ng build
 artifacts:
     files:
