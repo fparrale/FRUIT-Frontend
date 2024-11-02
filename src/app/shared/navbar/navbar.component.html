@@ -1,0 +1,27 @@
+<!-- <div id="containernavbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid"> 
+          <span class="score">Score: 10/100</span>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" routerLink="auth/login">Home</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="auth/questions">Preguntas</a></li>
+          </ul>
+        </div>
+    </nav>
+</div> -->
+
+
+<mat-toolbar color="primary">
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="navbar-content">
+        <span class="score">Score: 10/100</span>
+        <ul class="navbar-nav">
+            <button mat-icon-button aria-label="autorenew" (click)="againQuestionClear()">
+                <mat-icon>autorenew</mat-icon>
+              </button>
+        </ul>
+    </div>
+  </mat-toolbar>
+  
