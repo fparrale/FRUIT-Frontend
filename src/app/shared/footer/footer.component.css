@@ -1,0 +1,7 @@
+:host {
+    display: block;
+    background: linear-gradient(135deg, #f0f2f5 0%, #e5e7eb 100%);
+  }
+  .card {
+    transition: all 0.3s ease;
+  }

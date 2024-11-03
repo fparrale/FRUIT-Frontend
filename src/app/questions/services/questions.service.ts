@@ -8,7 +8,8 @@ import { ApiResponse } from '../interfaces/ApiResponse';
 })
 export class QuestionsService {
 
-  private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
+  // private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
+  private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app';
   private againQuestionSource = new Subject<any>();
   againQuestion$ = this.againQuestionSource.asObservable();
 
@@ -19,7 +20,7 @@ export class QuestionsService {
   getQuestions(salaDeJuego: string): Observable<ApiResponse> {
     // const token = localStorage.getItem('token'); 
 
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MzAwNjY2OTIsImV4cCI6MTczMDE1MzA5MiwibmJmIjoxNzMwMDY2NjkyLCJqdGkiOiJvUG9pNzBmQUtvZ0V4bDIzIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.hPKG10DG680XXhdnjk5eS0WtzQ1yTUytkMUJs3j2bH8";
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnV6enktbmZyLXF1ZXN0LnVwLnJhaWx3YXkuYXBwL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzMwNjA3MTgwLCJleHAiOjE3MzA2OTM1ODAsIm5iZiI6MTczMDYwNzE4MCwianRpIjoiWVpSbmRkanVjU2wzVjRZaCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.1hrPb0x_Hj1spvRn8ruFsEF9O28WaqSLUhSYHex2r2k";
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`

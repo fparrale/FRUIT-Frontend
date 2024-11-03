@@ -9,11 +9,12 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { QuestionsComponent } from "../../questions/questions/questions.component";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NavbarComponent, MatSidenavModule, MatListModule, MatIconModule, RouterModule, CommonModule, QuestionsComponent],
+  imports: [NavbarComponent, MatSidenavModule, MatListModule, MatIconModule, RouterModule, CommonModule, QuestionsComponent, FooterComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

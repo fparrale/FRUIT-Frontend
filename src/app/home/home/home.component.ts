@@ -4,11 +4,12 @@ import { NavbarComponent } from "../../shared/navbar/navbar.component";
 import { SidebarComponent } from "../../shared/sidebar/sidebar.component";
 import { QuestionsComponent } from "../../questions/questions/questions.component";
 import { HttpClientModule } from '@angular/common/http';
+import { FooterComponent } from "../../shared/footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, NavbarComponent, SidebarComponent, QuestionsComponent, HttpClientModule],
+  imports: [RouterModule, NavbarComponent, SidebarComponent, QuestionsComponent, HttpClientModule, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

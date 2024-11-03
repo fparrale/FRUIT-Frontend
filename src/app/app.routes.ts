@@ -4,6 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { NgModule } from '@angular/core';
 import { QuestionsComponent } from './questions/questions/questions.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 export const routes: Routes = [
     { path:   
@@ -13,7 +14,7 @@ export const routes: Routes = [
       children: [
         { path: 'login', component: LoginComponent },
         { path: 'register', component: RegisterComponent },
-        { path: 'questions', component: QuestionsComponent },
+        { path: 'questions', component: FooterComponent },
       ]
     },
   ];
