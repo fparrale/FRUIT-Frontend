@@ -72,3 +72,10 @@
   #containernavbar {
     flex-shrink: 0; 
   }
+
+  #containernavbar {
+    position: fixed;
+    width: 100%;
+    z-index: 10; /* Valor mayor que el contenido */
+    flex-shrink: 0; 
+  }

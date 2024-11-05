@@ -28,7 +28,7 @@
     </svg>
   </div> -->
 
-  <div class="min-h-screen flex items-center justify-center p-4">
+  <!-- <div class="min-h-screen flex items-center justify-center p-4">
     <div class="container max-w-2xl">
       <div class="card text-center">
         <h1 class="text-4xl font-bold mb-8 text-indigo-600">Quiz Master</h1>
@@ -59,4 +59,32 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <div class="home-container">
+    <header>
+      <h1>Serious Game Hub</h1>
+    </header>
+    
+    <main class="options-grid">
+      <div class="option-card" (click)="importQuestions()">
+        <div class="icon">📝</div>
+        <h2>Import Questions</h2>
+        <p>Upload or import your question sets</p>
+      </div>
+
+      <div class="option-card" (click)="createGame()">
+        <div class="icon">🎮</div>
+        <h2>Create Game Room</h2>
+        <p>Start a new game session</p>
+      </div>
+
+      <div class="option-card" (click)="findGame()">
+        <div class="icon">🔍</div>
+        <h2>Find Game Room</h2>
+        <p>Join an existing game session</p>
+      </div>
+    </main>
+
+
   </div>

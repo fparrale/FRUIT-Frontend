@@ -20,7 +20,7 @@ export class QuestionsService {
   getQuestions(salaDeJuego: string): Observable<ApiResponse> {
     // const token = localStorage.getItem('token'); 
 
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnV6enktbmZyLXF1ZXN0LnVwLnJhaWx3YXkuYXBwL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzMwNjA3MTgwLCJleHAiOjE3MzA2OTM1ODAsIm5iZiI6MTczMDYwNzE4MCwianRpIjoiWVpSbmRkanVjU2wzVjRZaCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.1hrPb0x_Hj1spvRn8ruFsEF9O28WaqSLUhSYHex2r2k";
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnV6enktbmZyLXF1ZXN0LnVwLnJhaWx3YXkuYXBwL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzMwNzQ5ODkzLCJleHAiOjE3MzA4MzYyOTMsIm5iZiI6MTczMDc0OTg5MywianRpIjoiWDJJa3ZIa0czcm44UXl6RyIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.p1h5qpoR0N57BbIyRlI0y9spIOCE9Ev4vZpTzmXeNI8";
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`

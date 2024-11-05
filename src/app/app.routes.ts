@@ -4,20 +4,27 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { NgModule } from '@angular/core';
 import { QuestionsComponent } from './questions/questions/questions.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { HomeQuestionComponent } from './shared/home-question/home-question.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 export const routes: Routes = [
-    { path:   
-   '', component: HomeComponent }, 
-    {
-      path: 'auth',
-      children: [
-        { path: 'login', component: LoginComponent },
-        { path: 'register', component: RegisterComponent },
-        { path: 'questions', component: FooterComponent },
-      ]
-    },
-  ];
+  { 
+    path: '', 
+    component: HomeComponent, 
+    children: [
+      { path: '', component: HomeQuestionComponent }, // Ruta por defecto
+      { path: 'find', component: QuestionsComponent },
+      { 
+        path: 'auth', 
+        children: [
+          { path: 'login', component: LoginComponent },
+          { path: 'register', component: RegisterComponent },
+          { path: 'questions', component: QuestionsComponent }
+        ] 
+      },
+    ] 
+  }
+];
 
 
   @NgModule({
