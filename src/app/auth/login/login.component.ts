@@ -11,36 +11,32 @@ import { Credentials } from '../interfaces/Credentials';
   imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [AuthService]
+  providers: [AuthService],
 })
-
-export class LoginComponent {
-
+export default class LoginComponent {
   credentials: Credentials = {
     email: '',
-    password: ''
+    password: '',
   };
 
   errorMessage: string | null = null;
+  showAlert: boolean = false;
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  onSubmit() {
-    this.errorMessage = null;
+  onSubmit(): void {
     this.authService.login(this.credentials).subscribe({
-      next: (user) => {
-        if (user) {
-          localStorage.setItem('currentUser', JSON.stringify(user)); 
-            this.router.navigate(['/']);
-        } else {
-          this.errorMessage = 'Credenciales inválidas'; 
-        }
+      next: () => this.router.navigate(['/home']),
+      error: (err) => {
+        this.errorMessage = err.message || 'Ocurrió un error inesperado';
+        this.showAlert = true;
+        setTimeout(() => {
+          this.closeAlert();
+        }, 3000);
       },
-      error: (error) => {
-        this.errorMessage = error.message; 
-        console.log(error); 
-      }
     });
   }
 
+  closeAlert(): void {
+    this.showAlert = false;
+  }
 }

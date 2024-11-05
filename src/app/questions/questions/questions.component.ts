@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './questions.component.css',
   providers: [QuestionsService]
 })
-export class QuestionsComponent implements OnInit {
+export default class QuestionsComponent implements OnInit {
 
   questions: Question[] = [];
   currentQuestion: Question | undefined;
@@ -39,7 +39,7 @@ export class QuestionsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.questionService.getQuestions('42BQqC').subscribe(response => {
+    this.questionService.getQuestions('WQLk8k').subscribe(response => {
       this.questions = response.questions;
       this.showQuestion();
     });

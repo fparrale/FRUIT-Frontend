@@ -1,49 +1,70 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators'; 
+import { catchError, delay, map, tap } from 'rxjs/operators';
+import { Credentials, User, UserData } from '../interfaces/Credentials';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
-interface User {
-    email: string;
-    role: 'estudiante' | 'profesor';
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  private apiUrl = 'http://localhost:8000/api/auth/login';
+
+  //private currentUser: UserData | null = null;
+  private userDataKey = 'userData';
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  login(credentials: Credentials): Observable<any> {
+    return this.http.post<any>(this.apiUrl, credentials).pipe(
+      tap((response) => {
+        this.setUserData(response.data);
+      }),
+      catchError((error) => {
+        return throwError(
+          () => new Error(error.error.message || 'Ocurrio un error intentalo mas tarde')
+        );
+      })
+    );
   }
 
-  export class AuthService {
-
-    private users: User[] = [
-      { email: 'profesor@example.com', role: 'profesor' },
-      { email: 'estudiante@example.com', role: 'estudiante' }
-    ];
-
-    private currentUser: User | null = null;
-  
-    constructor() { }
-  
-    login(credentials: { email: string, password: string }): Observable<User | null> {
-        const user = this.users.find(u => u.email === credentials.email);
-    
-        if (user) {
-          if (credentials.email === 'profesor@example.com' && credentials.password === 'profesor123') {
-            this.currentUser = user; 
-            return of(user).pipe(delay(500)); 
-          } else if (credentials.email === 'estudiante@example.com' && credentials.password === 'estudiante123') {
-            this.currentUser = user; 
-            return of(user).pipe(delay(500));
-          }
-        }
-    
-        return throwError(() => new Error('Credenciales inválidas')); 
-      }
-    
-      getCurrentUser(): User | null {
-        return this.currentUser; 
-      }
-    
-      hasRole(role: string): boolean {
-        const user = this.getCurrentUser();
-        return user?.role === role;
-      }
-    
-      canAccessRegister(): boolean {
-        return !this.hasRole('estudiante');
-      }
+  private setUserData(userData: UserData): void {
+    localStorage.setItem(this.userDataKey, JSON.stringify(userData));
   }
+
+   getUserData(): UserData | null {
+    if(typeof window !== 'undefined'){
+    const userDataString = localStorage.getItem(this.userDataKey);
+    return userDataString ? (JSON.parse(userDataString) as UserData) : null
+    }else{
+      return null;
+    }
+  }
+
+  isAuthenticated(): boolean {
+    const userData = this.getUserData();
+    if(!userData){
+      return false;
+    }else{
+      return this.isValidToken(userData);
+    }
+  }
+
+  isValidToken(userData: UserData): boolean {
+    try {
+      const decodedToken: any = jwtDecode(userData.access_token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp > currentTime;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.userDataKey);
+    this.router.navigate(['/login']);
+   
+  }
+}

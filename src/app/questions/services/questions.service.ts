@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ApiResponse } from '../interfaces/ApiResponse';
+import { AuthService } from '../../auth/services/AuthService.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,14 @@ export class QuestionsService {
 
   
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getQuestions(salaDeJuego: string): Observable<ApiResponse> {
-    // const token = localStorage.getItem('token'); 
 
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MzAwNjY2OTIsImV4cCI6MTczMDE1MzA5MiwibmJmIjoxNzMwMDY2NjkyLCJqdGkiOiJvUG9pNzBmQUtvZ0V4bDIzIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.hPKG10DG680XXhdnjk5eS0WtzQ1yTUytkMUJs3j2bH8";
+    const userData = this.authService.getUserData();
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${userData?.access_token}`,
     });
 
     return this.http.post<ApiResponse>(this.apiUrl, { code: salaDeJuego }, { headers });
