@@ -9,7 +9,8 @@ import { AuthService } from '../../auth/services/AuthService.service';
 })
 export class QuestionsService {
 
-  private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
+  // private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
+  private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/questions/questionsByCode';
   private againQuestionSource = new Subject<any>();
   againQuestion$ = this.againQuestionSource.asObservable();
 
@@ -25,7 +26,7 @@ export class QuestionsService {
       'Authorization': `Bearer ${userData?.access_token}`,
     });
 
-    return this.http.post<ApiResponse>(this.apiUrl, { code: salaDeJuego }, { headers });
+    return this.http.post<ApiResponse>(this.apiUrl, { code: salaDeJuego }, { headers, withCredentials: true });
   }
 
   againQuestions(data: any) {

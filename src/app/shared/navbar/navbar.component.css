@@ -89,8 +89,8 @@
     width: 100%; 
   }
   
-  .score {
-    color: rgb(0, 17, 255);
+  .logo {
+    color: rgb(0, 0, 0);
     margin-right: auto; 
     padding: 40px;
   }
@@ -114,7 +114,7 @@
       align-items: flex-start; 
     }
     
-    .score {
+    .logo {
       padding: 40px; 
     }
   
@@ -131,4 +131,20 @@
     .nav-item {
       margin-left: 0; 
     }
-  } */
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
