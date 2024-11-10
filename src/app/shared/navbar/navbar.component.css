@@ -1,6 +1,6 @@
 /* navbar.component.css */
 
-/* .navbar {
+.navbar {
     background-color: #ffffff !important; 
     color: white; 
     width: 10vh;
@@ -31,14 +31,14 @@
   
   .nav-item {
     margin-left: 1rem; 
-  } */
+  } 
   
-  /* .nav-link {
+  .nav-link {
 
-  } */
+  } 
   
 
-  /* mat-toolbar {
+   mat-toolbar {
     position: fixed;
     top: 0;
     z-index: 1000; 
@@ -68,7 +68,7 @@
   }  */
 
 
-  /* mat-toolbar {
+   mat-toolbar {
     position: fixed;
     top: 0;
     z-index: 1000;
