@@ -11,7 +11,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadComponent: () => import('./home/home.component'),
+        loadComponent: () => import('./shared/home-question/home-question.component'),
         canActivate: [AuthGuard],
       },
       {
@@ -27,6 +27,11 @@ export const routes: Routes = [
       {
         path: 'game',
         loadComponent: () => import('./game/game.component'),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'quiz-game',
+        loadComponent: () => import('./questions/questions/questions.component'),
         canActivate: [AuthGuard],
       },
       {

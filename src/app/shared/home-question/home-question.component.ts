@@ -8,7 +8,7 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './home-question.component.html',
   styleUrl: './home-question.component.css'
 })
-export class HomeQuestionComponent {
+export default class HomeQuestionComponent {
 
   constructor(private router: 
     Router) {}
@@ -25,7 +25,7 @@ export class HomeQuestionComponent {
 
   findGame() {
     console.log('Find Game clicked');
-    this.router.navigate(['find']);
+    this.router.navigate(['/game']);
   }
 
 }

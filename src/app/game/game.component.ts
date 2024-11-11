@@ -3,6 +3,7 @@ import { GameService } from './services/game.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GameDataParamsService } from './params/game-data-params.service';
 
 @Component({
   selector: 'app-game',
@@ -16,7 +17,7 @@ export default class GameComponent {
   errorMessage: string | null = null;
   showAlert: boolean = false;
 
-  constructor(private gameService: GameService, private router: Router) {}
+  constructor(private gameService: GameService, private router: Router, private gameDataParamsService: GameDataParamsService) {}
 
   submitCode() {
     console.log('submitCode');
@@ -24,9 +25,9 @@ export default class GameComponent {
       this.gameService.submitGameCode(this.gameCode).subscribe({
         next: (response) => {
           const gameData = response.questions;
-          console.log(gameData);
-          
-          this.router.navigate(['/game-info'], { state: { gameData } });
+          this.gameDataParamsService.setGameDataLocalStorage(gameData);
+          this.gameDataParamsService.setGameData(gameData);
+          this.router.navigate(['/quiz-game']);
         },
         error: (error) => {
           this.errorMessage = error.message;
