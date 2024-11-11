@@ -10,7 +10,9 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/auth/login';
+ private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/auth/login';
+ //private apiUrl = 'http://localhost:8000/api/auth/login';
+
 
   //private currentUser: UserData | null = null;
   private userDataKey = 'userData';

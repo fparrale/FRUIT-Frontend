@@ -19,7 +19,12 @@ export class GameDataParamsService {
   }
 
   getGameDataLocalStorage() {
-    return JSON.parse(localStorage.getItem('gameData') || '{}');
+    const data = localStorage.getItem('gameData');
+    if (data != null) {  
+      return JSON.parse(data!);
+    }else{
+      return null;
+    }
   }
 
   clearGameDataLocalStorage() {

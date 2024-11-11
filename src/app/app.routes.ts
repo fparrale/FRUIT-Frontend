@@ -3,6 +3,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthenticatedGuard } from './core/guards/authenticated.guard';
+import { quizGameGuard } from './core/guards/game/quiz-game.guard';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,7 @@ export const routes: Routes = [
       {
         path: 'game',
         loadComponent: () => import('./game/game.component'),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, quizGameGuard],
       },
       {
         path: 'quiz-game',

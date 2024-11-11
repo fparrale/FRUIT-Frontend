@@ -10,11 +10,13 @@ import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/rou
 import { CommonModule } from '@angular/common';
 
 import { AuthService } from '../../auth/services/AuthService.service';
+import { GameDataParamsService } from '../../game/params/game-data-params.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [
+    CommonModule,
     RouterLink,
     RouterLinkActive
   ],
@@ -32,6 +34,7 @@ export class SidebarComponent {
   constructor(
     private observer: BreakpointObserver,
     private authService: AuthService,
+    private gameDataParamsService: GameDataParamsService,
     private router: Router
   ) {}
 
@@ -62,5 +65,11 @@ export class SidebarComponent {
 
   logout(): void {
     this.authService.logout();
+    this.gameDataParamsService.clearGameDataLocalStorage();
+  }
+
+  isRouteActive(): boolean {
+    const rutasActivas = ['/game', '/quiz-game'];
+    return rutasActivas.some(ruta => this.router.isActive(ruta, false));
   }
 }

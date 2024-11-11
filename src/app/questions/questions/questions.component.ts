@@ -44,14 +44,19 @@ export default class QuestionsComponent implements OnInit {
     const gameDataParams = this.gameDataParamsService.getGameData();
     
     if(gameDataParams != null){
+      console.log("gameDataParamsd");
       this.questions = gameDataParams;
       this.showQuestion();
     }else{
       const dataGameStorage = this.gameDataParamsService.getGameDataLocalStorage();
+      console.log(dataGameStorage);
 
       if(dataGameStorage != null){
+        console.log("dataGameStorage");
         this.questions = dataGameStorage;
         this.showQuestion();
+      }else{
+        this.router.navigate(['/game']);
       }
     }
     //this.showQuestion();
