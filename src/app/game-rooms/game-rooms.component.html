@@ -1,0 +1,110 @@
+<div class="py-5">
+    <!-- Contenedor Responsivo -->
+    <div class="flex flex-wrap gap-4 mb-6 items-center justify-between">
+        <!-- Botón Crear Salas -->
+        <button
+            class="flex items-center gap-2 px-4 py-2 text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none transition duration-300 w-full sm:w-auto text-center justify-center">
+            <span class="material-icons text-base">add</span>
+            <span class="text-sm font-semibold">Crear Salas</span>
+        </button>
+
+        <!-- Input Subir Archivo -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 w-full sm:w-auto">
+            <label class="text-sm font-medium text-gray-700 mb-2 sm:mb-0">
+                Subir Preguntas:
+            </label>
+            <input
+                id="fileInput"
+                type="file"
+                (change)="onFileSelected($event)"
+                accept=".xlsx, .xls"
+                class="block w-full sm:w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-md focus:ring-blue-500 focus:border-blue-500 transition duration-300 cursor-pointer"
+            />
+        </div>
+    </div>
+
+    <!-- Contenedor de tabla responsiva -->
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto">
+                <thead class="bg-blue-500 text-white">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
+                            Id</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
+                            Codigo</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
+                            Fecha de Creación</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
+                            Fecha de Expiración</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
+                            Estado</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
+                            Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gameRooms of paginatedData"
+                        class="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200">
+                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ gameRooms.id }}</td>
+                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ gameRooms.code }}</td>
+                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ formatDate(gameRooms.created_at) }}
+                        </td>
+                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ formatDate(gameRooms.expiration_date) }}
+                        </td>
+                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
+                            <span
+                                class="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium border rounded-full"
+                                [ngClass]="gameRooms.status ? 'bg-green-100 text-green-800 border-green-300' : 'bg-red-100 text-red-800 border-red-300'">
+                                <span class="w-2.5 h-2.5 rounded-full"
+                                    [ngClass]="gameRooms.status ? 'bg-green-500' : 'bg-red-500'">
+                                </span>
+                                {{ gameRooms.status ? 'Activo' : 'Inactivo' }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
+                            <div class="flex gap-2">
+                                <button
+                                (click)="onEdit(gameRooms)"
+                                    class="px-2 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none">
+                                    Editar
+                                </button>
+                                <button
+                                (click)="onDelete(gameRooms)"
+                                    class="px-2 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="flex justify-center items-center mt-6 space-x-2">
+        <button
+            class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            [disabled]="currentPage === 1"
+            [ngClass]="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''"
+            (click)="prevPage()">
+            &laquo; Anterior
+        </button>
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+            class="px-4 py-2 text-sm font-medium border rounded-md transition-colors duration-300"
+            [ngClass]="currentPage === i + 1 
+            ? 'bg-blue-500 text-white border-blue-500' 
+            : 'bg-gray-100 text-gray-500 border-gray-300 hover:bg-gray-200 hover:text-gray-700'"
+            (click)="goToPage(i + 1)">
+            {{ i + 1 }}
+        </button>
+        <button
+            class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            [disabled]="currentPage === totalPages"
+            [ngClass]="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''" 
+            (click)="nextPage()">
+            Siguiente &raquo;
+        </button>
+    </div>
+</div>

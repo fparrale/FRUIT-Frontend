@@ -5,19 +5,18 @@ import { catchError, delay, map, tap } from 'rxjs/operators';
 import { Credentials, User, UserData } from '../interfaces/Credentials';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
- private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/auth/login';
- //private apiUrl = 'http://localhost:8000/api/auth/login';
-
-
+  private apiUrl = environment.apiUrl + 'auth/login';
   //private currentUser: UserData | null = null;
   private userDataKey = 'userData';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   login(credentials: Credentials): Observable<any> {
     return this.http.post<any>(this.apiUrl, credentials).pipe(
@@ -66,6 +65,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.userDataKey);
+    localStorage.removeItem('timer');
     this.router.navigate(['/login']);
    
   }

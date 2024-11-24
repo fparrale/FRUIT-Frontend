@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class GameDataParamsService {
  private gameData: any;
+ private gameResult: any = null;
 
   setGameData(data: any) {
     this.gameData = data;
@@ -18,6 +19,18 @@ export class GameDataParamsService {
     localStorage.setItem('gameData', JSON.stringify(data));
   }
 
+  setGameRoomIdLocalStorage(roomId: string) {
+    localStorage.setItem('gameRoomId', roomId);
+  }
+
+  getGameRoomIdLocalStorage() {
+    return localStorage.getItem('gameRoomId');
+  }
+
+  removeGameRoomIdLocalStorage() {
+    localStorage.removeItem('gameRoomId');
+  }
+
   getGameDataLocalStorage() {
     const data = localStorage.getItem('gameData');
     if (data != null) {  
@@ -29,5 +42,13 @@ export class GameDataParamsService {
 
   clearGameDataLocalStorage() {
     localStorage.removeItem('gameData');
+  }
+
+  setGameResult(result: any): void {
+    this.gameResult = result;
+  }
+
+  getGameResult(): any {
+    return this.gameResult;
   }
 }

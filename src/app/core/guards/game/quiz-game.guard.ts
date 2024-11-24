@@ -7,10 +7,8 @@ export const quizGameGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (quizGame.getGameDataLocalStorage() == null) {
-    console.log('1');
     return true;
   } else {
-    console.log('2');
     router.navigate(['/quiz-game']);
     return false;
   }

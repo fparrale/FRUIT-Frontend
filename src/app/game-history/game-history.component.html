@@ -1,0 +1,64 @@
+<div class="py-10">
+    <!-- Contenedor de tabla responsiva -->
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto">
+          <thead class="bg-blue-500 text-white">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Id</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Codigo</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Puntaje</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Duración</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Iterar sobre los datos paginados -->
+            <tr *ngFor="let game of paginatedData" class="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200">
+              <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.id }}</td>
+              <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.game_room.code }}</td>
+              <td class="px-4 py-4 text-sm font-semibold"
+                  [ngClass]="game.score >= 70 ? 'text-green-500' : 'text-red-500'">
+                {{ game.score }} / 100
+              </td>
+              <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.duration }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Paginación -->
+    <div class="flex justify-center items-center mt-6 space-x-2">
+        <!-- Botón "Anterior" -->
+        <button
+          class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+          [disabled]="currentPage === 1"
+          [ngClass]="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''"
+          (click)="prevPage()"
+        >
+          &laquo; Anterior
+        </button>
+      
+        <!-- Botones de páginas -->
+        <button
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          class="px-4 py-2 text-sm font-medium border rounded-md transition-colors duration-300"
+          [ngClass]="currentPage === i + 1 
+            ? 'bg-blue-500 text-white border-blue-500' 
+            : 'bg-gray-100 text-gray-500 border-gray-300 hover:bg-gray-200 hover:text-gray-700'"
+          (click)="goToPage(i + 1)"
+        >
+          {{ i + 1 }}
+        </button>
+      
+        <!-- Botón "Siguiente" -->
+        <button
+          class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+          [disabled]="currentPage === totalPages"
+          [ngClass]="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''"
+          (click)="nextPage()"
+        >
+          Siguiente &raquo;
+        </button>
+      </div>
+      

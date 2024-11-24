@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatListModule } from '@angular/material/list';
@@ -23,7 +23,7 @@ import { GameDataParamsService } from '../../game/params/game-data-params.servic
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   isMobile = true;
@@ -31,12 +31,27 @@ export class SidebarComponent {
 
   @Output() toggleSidenav = new EventEmitter<void>();
 
+  userRoleId: number = 0;
+
   constructor(
     private observer: BreakpointObserver,
     private authService: AuthService,
     private gameDataParamsService: GameDataParamsService,
-    private router: Router
+    private router: Router,
   ) {}
+
+  ngOnInit(): void {
+    const userData = this.authService.getUserData();
+    this.userRoleId = userData?.user.role.id ?? 0;
+  }
+
+  canShowItemAdmin(): boolean {
+    return this.userRoleId === 3;
+  }
+
+  canShowItemTeacher(): boolean {
+    return this.userRoleId === 1;
+  }
 
   // ngOnInit() {
   //   this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
@@ -65,11 +80,50 @@ export class SidebarComponent {
 
   logout(): void {
     this.authService.logout();
+    this.gameDataParamsService.removeGameRoomIdLocalStorage();
     this.gameDataParamsService.clearGameDataLocalStorage();
   }
 
   isRouteActive(): boolean {
     const rutasActivas = ['/game', '/quiz-game'];
     return rutasActivas.some(ruta => this.router.isActive(ruta, false));
+  }
+
+  menuOpen = false;
+
+ 
+  isActive(route: string): boolean {
+    return this.router.url === route;
+  }
+
+  @ViewChild('menuRef', { static: true }) menuRef!: ElementRef;
+
+  toggleMenu(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.menuOpen = !this.menuOpen;
+  }
+
+  onOptionClick() {
+    if (window.innerWidth < 1280) {
+      this.menuOpen = false;
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth >= 1280) {
+      this.menuOpen = true;
+    }else{
+      this.menuOpen = false;
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (this.menuOpen && !this.menuRef.nativeElement.contains(event.target)) {
+      this.menuOpen = false;
+    }
   }
 }
