@@ -9,7 +9,6 @@ export const quizGameGuard: CanActivateFn = (route, state) => {
   const gameOption = localStorage.getItem('gameOption');
 
   if (quizGame.getGameDataLocalStorage() == null) {
-    console.log('1');
     return true;
   } else {
     if (gameOption === 'practice') {

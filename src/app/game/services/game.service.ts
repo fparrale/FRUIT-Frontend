@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthService } from '../../auth/services/AuthService.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GameService {
-  // private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/questions/questionsByCode';
-  private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
+export class GameService { 
+  private apiUrl = environment.apiUrl + 'questions/questionsByCode';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
 

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/AuthService.service';
 import { CommonModule } from '@angular/common';
 import { Credentials } from '../interfaces/Credentials';
+import { LoadingService } from '../../shared/loading.service';
+import { AlertService } from '../../shared/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -19,24 +21,19 @@ export default class LoginComponent {
     password: '',
   };
 
-  errorMessage: string | null = null;
-  showAlert: boolean = false;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private alertService: AlertService, private loadingService: LoadingService, private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
+    this.loadingService.showLoading();
     this.authService.login(this.credentials).subscribe({
-      next: () => this.router.navigate(['/home']),
-      error: (err) => {
-        this.errorMessage = err.message || 'Ocurrió un error inesperado';
-        this.showAlert = true;
-        setTimeout(() => {
-          this.closeAlert();
-        }, 3000);
+      next: () =>{
+        this.loadingService.hideLoading();
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        this.loadingService.hideLoading();
+        this.alertService.showAlert(error.message, true);
       },
     });
-  }
-
-  closeAlert(): void {
-    this.showAlert = false;
   }
 }

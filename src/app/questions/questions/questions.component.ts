@@ -1,109 +1,139 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { Question } from '../interfaces/Questions';
 import { QuestionsService } from '../services/questions.service';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { GameDataParamsService } from '../../game/params/game-data-params.service';
+import { AlertService } from '../../shared/alert.service';
+import { BodyResultsQuestions } from '../interfaces/BodyResultsQuestions';
+import { LoadingService } from '../../shared/loading.service';
 
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [DragDropModule, CommonModule, HttpClientModule, MatButtonModule],
+  imports: [DragDropModule, CommonModule, MatButtonModule],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
-  providers: [QuestionsService]
+  providers: [QuestionsService],
 })
 export default class QuestionsComponent implements OnInit {
-
   questions: Question[] = [];
   currentQuestion: Question | undefined;
   currentQuestionIndex = 0;
   questionWords: string[] = [];
   variable: string[] = [];
-  feedback1: string[] = [];
+  //feedback1: string[] = [];
   value: string[] = [];
-  feedback2: string[] = [];
+  //feedback2: string[] = [];
   recomend: string[] = [];
-  feedback3: string[] = [];
-  validar: string[] = [];
-  currentDraggingItem : string[] = [];
+  //feedback3: string[] = [];
+  //validar: string[] = [];
+  currentDraggingItem: string[] = [];
+
+  timer: number = 0;
+  interval: any;
+
+  // alertMessage: string = '';
+  // title: string = '';
+
+  modalTitle: string = '';
+  modalContent: string = '';
+  showInfoModal: boolean = false;
+
+  showInstructions: boolean = true;
+
+  showConfirmationModal: boolean = false;
+
+
+  completedAnswers: {
+    id: string;
+    variable: string;
+    value: string;
+    recomend: string;
+  }[] = [];
 
   private againQuestionSubscription: Subscription | undefined;
 
-  answers: { variable: string[], value: string[], recomend: string[], availableWords: string[] }[] = []; 
+  answers: {
+    variable: string[];
+    value: string[];
+    recomend: string[];
+    availableWords: string[];
+  }[] = [];
 
-  constructor(private questionService: QuestionsService, private router: Router, private gameDataParamsService: GameDataParamsService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private alertService: AlertService,
+    private questionService: QuestionsService,
+    private router: Router,
+    private gameDataParamsService: GameDataParamsService, 
+  ) {}
 
   ngOnInit(): void {
-    
+    const storedTime = localStorage.getItem('timer');
+    this.timer = storedTime ? parseInt(storedTime, 10) : 0;
+
+    if (this.showInstructions) {
+      const instructionsElement = document.getElementById('instructionsAlert');
+      if (instructionsElement) {
+        instructionsElement.style.display = 'flex';
+      }
+    }
+
     const gameDataParams = this.gameDataParamsService.getGameData();
-    
-    if(gameDataParams != null){
-      console.log("gameDataParamsd");
+
+    if (gameDataParams != null) {
       this.questions = gameDataParams;
       this.showQuestion();
-    }else{
-      const dataGameStorage = this.gameDataParamsService.getGameDataLocalStorage();
-      console.log(dataGameStorage);
-
-      if(dataGameStorage != null){
-        console.log("dataGameStorage");
+    } else {
+      const dataGameStorage =
+        this.gameDataParamsService.getGameDataLocalStorage();
+      if (dataGameStorage != null) {
         this.questions = dataGameStorage;
         this.showQuestion();
-      }else{
+      } else {
         this.router.navigate(['/game']);
       }
     }
-    //this.showQuestion();
-  
-   
-    // this.questionService.getQuestions('WWSmNx').subscribe(response => {
-    //   this.questions = response.questions;
-    //   this.showQuestion();
-    // });
 
-    this.againQuestionSubscription = this.questionService.againQuestion$.subscribe((res) => {
-      console.log('againQuestion$ called');
-      this.againQuestion(); 
-    });
-    
-    
+    this.againQuestionSubscription =
+      this.questionService.againQuestion$.subscribe((res) => {
+        console.log('againQuestion$ called');
+        this.againQuestion();
+      });
+  }
+
+  closeInstructions(): void {
+    this.showInstructions = false;
+    const instructionsElement = document.getElementById('instructionsAlert');
+    if (instructionsElement) {
+      this.startTimer();
+      instructionsElement.style.display = 'none';
+    }
   }
 
   showQuestion(): void {
-    // this.currentQuestion = this.questions[this.currentQuestionIndex];
-    // this.questionWords.length = 0; 
-
- 
-    // this.questionWords.push(...(this.currentQuestion?.nfr.split(' ') || [])); 
-    // if (this.answers[this.currentQuestionIndex]) {
-    //   this.variable = this.answers[this.currentQuestionIndex].variable;
-    //   this.value = this.answers[this.currentQuestionIndex].value;
-    //   this.recomend = this.answers[this.currentQuestionIndex].recomend;
-    // } else {
-    //   this.variable = [];
-    //   this.value = [];
-    //   this.recomend = [];
-    // }
     this.currentQuestion = this.questions[this.currentQuestionIndex];
-
-    // Verifica si hay un estado guardado para la pregunta actual
     if (this.answers[this.currentQuestionIndex]) {
       this.variable = this.answers[this.currentQuestionIndex].variable;
       this.value = this.answers[this.currentQuestionIndex].value;
       this.recomend = this.answers[this.currentQuestionIndex].recomend;
-      this.questionWords = this.answers[this.currentQuestionIndex].availableWords;
+      this.questionWords =
+        this.answers[this.currentQuestionIndex].availableWords;
     } else {
-      // Si no hay estado guardado, inicializa los valores
       this.variable = [];
       this.value = [];
       this.recomend = [];
-      this.questionWords = [...(this.currentQuestion?.nfr.split(' ') || [])]; // Copia de las palabras originales
+      this.questionWords = [...(this.currentQuestion?.nfr.split(' ') || [])];
       this.answers[this.currentQuestionIndex] = {
         variable: this.variable,
         value: this.value,
@@ -114,29 +144,89 @@ export default class QuestionsComponent implements OnInit {
   }
 
   againQuestion(): void {
-    console.log("xd")
     this.currentQuestion = this.questions[this.currentQuestionIndex];
-    this.questionWords.length = 0; 
-
- 
-    this.questionWords.push(...(this.currentQuestion?.nfr.split(' ') || [])); 
+    this.questionWords.length = 0;
+    this.questionWords.push(...(this.currentQuestion?.nfr.split(' ') || []));
     this.variable = [];
     this.value = [];
     this.recomend = [];
   }
 
   nextQuestion(): void {
-    if (this.validateAnswer()) {
-      this.clearContainers();
-      if (this.currentQuestionIndex < this.questions.length) {
-        this.showQuestion();
-      } else {
-        alert('¡Has terminado el juego!');
-      }
+    const answer = {
+      id: this.currentQuestion?.id?.toString() || '0',
+      variable: this.variable.join(' '),
+      value: this.value.join(' '),
+      recomend: this.recomend.join(' '),
+    };
+
+    const existingIndex = this.completedAnswers.findIndex(
+      (item) => item.id === answer.id
+    );
+    if (existingIndex !== -1) {
+      this.completedAnswers[existingIndex] = answer;
     } else {
-      //alert('Respuesta incorrecta. Inténtalo de nuevo.');
+      this.completedAnswers.push(answer);
+    }
+
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.clearContainers();
+      this.showQuestion();
+    } else {
+      this.showConfirmationModal = true;
+      console.log('Respuestas completadas:', this.completedAnswers);
+      //this.alertService.showAlert('¡Has terminado el juego!', false);
     }
   }
+
+  canProceed(): boolean {
+    return (
+      this.variable.length > 0 &&
+      this.value.length > 0 &&
+      this.recomend.length > 0
+    );
+  }
+
+  cancelSubmit(): void {
+    this.showConfirmationModal = false;
+  }
+
+  // cancelConfirmationModal(): void {
+  //   this.showConfirmationModal = false; // Oculta el modal
+  // }
+
+submitAnswers(): void {
+    this.loadingService.showLoading();
+    
+    clearInterval(this.interval);
+
+    const body : BodyResultsQuestions = {
+      game_room_id: Number(this.gameDataParamsService.getGameRoomIdLocalStorage()),
+      duration: this.formatTime(this.timer),
+      answers: this.completedAnswers.map(answer => ({
+          id: answer.id,
+          variable: answer.variable || 'No seleccionada',
+          value: answer.value || 'No seleccionada',
+          recomend: answer.recomend || 'No seleccionada',
+      }))
+  }
+
+  this.questionService.getResultsQuestions(body).subscribe({
+    next: (response) => {
+      this.loadingService.hideLoading();
+      this.gameDataParamsService.clearGameDataLocalStorage();
+      this.gameDataParamsService.removeGameRoomIdLocalStorage();
+      localStorage.removeItem('timer');
+      this.gameDataParamsService.setGameResult(response);
+      // localStorage.setItem('gameResult', JSON.stringify(response.data)); //BORRAR
+      this.router.navigate(['/results']);
+    },
+    error: (error) => {
+      this.loadingService.hideLoading();
+      this.alertService.showAlert(error.message, true);
+    },
+  });
+}
 
   previousQuestion(): void {
     if (this.currentQuestionIndex > 0) {
@@ -148,48 +238,18 @@ export default class QuestionsComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    // if (event.previousContainer === event.container) {
-    //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    // } else {
-    //   // console.log(this.currentDraggingItem);
-
-    //   // console.log(event.container.data);
-    //   // transferArrayItem(
-    //   //   event.previousContainer.data,
-    //   //   event.container.data,
-    //   //   event.previousIndex,
-    //   //   event.currentIndex,
-    //   // );
-
-    //   if (this.currentDraggingItem) {
-    //     const draggedItemIndex = event.previousContainer.data.indexOf(this.currentDraggingItem[0]);
-
-    //     if (draggedItemIndex !== -1) {
-    //       transferArrayItem(
-    //         event.previousContainer.data,
-    //         event.container.data,
-    //         draggedItemIndex, 
-    //         event.currentIndex
-    //       );
-
-        
-    //     } else {
-    //       console.error('El elemento arrastrado no se encontró en el contenedor anterior.');
-    //     }
-    //   }
- 
-    //   this.answers[this.currentQuestionIndex] = { 
-    //     variable: this.variable, 
-    //     value: this.value, 
-    //     recomend: this.recomend 
-    //   };
-    // }
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
       if (this.currentDraggingItem) {
-        const draggedItemIndex = event.previousContainer.data.indexOf(this.currentDraggingItem[0]);
-  
+        const draggedItemIndex = event.previousContainer.data.indexOf(
+          this.currentDraggingItem[0]
+        );
+
         if (draggedItemIndex !== -1) {
           transferArrayItem(
             event.previousContainer.data,
@@ -198,16 +258,16 @@ export default class QuestionsComponent implements OnInit {
             event.currentIndex
           );
         } else {
-          console.error('El elemento arrastrado no se encontró en el contenedor anterior.');
+          console.error(
+            'El elemento arrastrado no se encontró en el contenedor anterior.'
+          );
         }
       }
-      
-      // Guarda el estado actual de las respuestas y las palabras disponibles
-      this.answers[this.currentQuestionIndex] = { 
-        variable: this.variable, 
-        value: this.value, 
+      this.answers[this.currentQuestionIndex] = {
+        variable: this.variable,
+        value: this.value,
         recomend: this.recomend,
-        availableWords: this.questionWords
+        availableWords: this.questionWords,
       };
     }
   }
@@ -216,54 +276,57 @@ export default class QuestionsComponent implements OnInit {
     this.currentDraggingItem.length = 0;
     this.currentDraggingItem.push(item);
   }
-  
 
-  validateAnswer(): boolean {
-    // console.log(this.variable);
-    // console.log(this.value);
-    // console.log(this.recomend);
-    // console.log(this.currentQuestion?.variable);
-    // console.log(this.currentQuestion?.value);
-    // console.log(this.currentQuestion?.recomend);
-    // console.log(this.questionWords);
-    // const correctVariableArray = this.currentQuestion?.variable.split(' '); 
+  // validateAnswer(): boolean {
+  //   // console.log(this.variable);
+  //   // console.log(this.value);
+  //   // console.log(this.recomend);
+  //   // console.log(this.currentQuestion?.variable);
+  //   // console.log(this.currentQuestion?.value);
+  //   // console.log(this.currentQuestion?.recomend);
+  //   // console.log(this.questionWords);
+  //   // const correctVariableArray = this.currentQuestion?.variable.split(' ');
 
-    // const isVariableCorrect = 
-    //   this.variable.length === correctVariableArray?.length && 
-    //   this.variable.every((word, index) => word === correctVariableArray[index]);
-    // return isVariableCorrect;
+  //   // const isVariableCorrect =
+  //   //   this.variable.length === correctVariableArray?.length &&
+  //   //   this.variable.every((word, index) => word === correctVariableArray[index]);
+  //   // return isVariableCorrect;
 
-  const correctVariableArray = this.currentQuestion?.variable.split(' ');
-  const correctValueArray = this.currentQuestion?.value.split(' ');
-  //const correctRecomendArray = this.currentQuestion?.recomend.split(' ');
+  //   const correctVariableArray = this.currentQuestion?.variable.split(' ');
+  //   const correctValueArray = this.currentQuestion?.value.split(' ');
+  //   //const correctRecomendArray = this.currentQuestion?.recomend.split(' ');
 
-  const isVariableCorrect = 
-    this.variable.length === correctVariableArray?.length && 
-    this.variable.every((word, index) => word === correctVariableArray[index]);
+  //   const isVariableCorrect =
+  //     this.variable.length === correctVariableArray?.length &&
+  //     this.variable.every(
+  //       (word, index) => word === correctVariableArray[index]
+  //     );
 
-  const isValueCorrect = 
-    this.value.length === correctValueArray?.length && 
-    this.value.every((word, index) => word === correctValueArray[index]);
+  //   const isValueCorrect =
+  //     this.value.length === correctValueArray?.length &&
+  //     this.value.every((word, index) => word === correctValueArray[index]);
 
-  // const isRecomendCorrect = 
-  //   this.recomend.length === correctRecomendArray?.length && 
-  //   this.recomend.every((word, index) => word === correctRecomendArray[index]);
+  //   // const isRecomendCorrect =
+  //   //   this.recomend.length === correctRecomendArray?.length &&
+  //   //   this.recomend.every((word, index) => word === correctRecomendArray[index]);
 
-  if (!isVariableCorrect) {
-    alert(this.currentQuestion?.feedback1 || 'Feedback para variable incorrecta.');
-  } else if (!isValueCorrect) {
-    alert(this.currentQuestion?.feedback2 || 'Feedback para valor incorrecto.');
-  }
-  // } else if (!isRecomendCorrect) {
-  //   alert(this.currentQuestion?.feedback3 || 'Feedback para recomendación incorrecta.');
+  //   if (!isVariableCorrect) {
+  //     this.showAlert(this.currentQuestion?.feedback1 || 'Feedback para variable incorrecta.', 'Variable Linguistica');
+  //   } else if (!isValueCorrect) {
+  //     this.showAlert(this.currentQuestion?.feedback2 || 'Feedback para variable incorrecta.', 'Valor Linguistico');
+  //   }
+  //   // } else if (!isRecomendCorrect) {
+  //   //   alert(this.currentQuestion?.feedback3 || 'Feedback para recomendación incorrecta.');
+  //   // }
+
+  //   return isVariableCorrect && isValueCorrect;
+  //   //&& isRecomendCorrect;
   // }
 
-  return isVariableCorrect && isValueCorrect;
-  //&& isRecomendCorrect;
-  }
-
   clearContainers(): void {
-    this.currentQuestionIndex++;
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+    }
     this.variable = [];
     this.value = [];
     this.recomend = [];
@@ -273,6 +336,64 @@ export default class QuestionsComponent implements OnInit {
     if (this.againQuestionSubscription) {
       this.againQuestionSubscription.unsubscribe();
     }
+    clearInterval(this.interval);
   }
 
+  startTimer(): void {
+    this.interval = setInterval(() => {
+      this.timer++;
+      localStorage.setItem('timer', this.timer.toString());
+    }, 1000);
+  }
+
+  resetTimer(): void {
+    this.timer = 0;
+    localStorage.setItem('timer', '0');
+  }
+
+  formatTime(seconds: number): string {
+    const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+    const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${hrs}:${mins}:${secs}`;
+  }
+
+  // showAlert(message: string, title: string): void {
+  //   this.alertMessage = message;
+  //   this.title = title;
+  //   const alertElement = document.getElementById('customAlert');
+  //   if (alertElement) {
+  //     alertElement.classList.remove('hidden');
+  //   }
+  // }
+
+  // closeAlert(): void {
+  //   const alertElement = document.getElementById('customAlert');
+  //   if (alertElement) {
+  //     alertElement.classList.add('hidden');
+  //   }
+  // }
+ 
+
+
+  openInfoModal(type: string): void {
+    switch (type) {
+        case 'variable':
+            this.modalTitle = 'Variable Lingüística';
+            this.modalContent = 'Una variable lingüística es un concepto utilizado principalmente en lógica difusa (fuzzy logic) y representa una variable cuyo valor puede expresarse mediante términos o palabras de un lenguaje natural en lugar de valores numéricos estrictos. Estos términos suelen ser etiquetas lingüísticas como "bajo", "alto", "medio", "rápido", "lento", entre otros.';
+            break;
+        case 'value':
+            this.modalTitle = 'Valor Lingüístico';
+            this.modalContent = 'Un Valor Lingüístico representa un calificativo asignado, como "rápidamente" o "lentamente".';
+            break;
+        case 'recomend':
+            this.modalTitle = 'Recomendación Lingüística';
+            this.modalContent = 'Una Recomendación Lingüística indica un consejo o acción sugerida, como "mejorar tiempos".';
+            break;
+        default:
+            this.modalTitle = '';
+            this.modalContent = '';
+    }
+    this.showInfoModal = true; // Muestra el modal
+}
 }

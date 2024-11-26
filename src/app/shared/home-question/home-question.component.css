@@ -6,7 +6,7 @@
     transition: all 0.3s ease;
   } */
 
-  .home-container {
+  /* .home-container {
     min-height: 100vh;
     padding: 2rem;
     background-color: var(--background-color);
@@ -79,4 +79,4 @@
     .option-card {
       padding: 1.5rem;
     }
-  }
+  } */

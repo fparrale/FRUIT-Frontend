@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthenticatedGuard } from './core/guards/authenticated.guard';
 import { quizGameGuard } from './core/guards/game/quiz-game.guard';
+import { roleAdminGuard } from './core/guards/role/role-admin.guard';
+import { roleTeacherGuard } from './core/guards/role/role-teacher.guard';
 
 export const routes: Routes = [
   {
@@ -18,7 +20,7 @@ export const routes: Routes = [
       {
         path: 'users',
         loadComponent: () => import('./users/users.component'),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, roleAdminGuard],
       },
       {
         path: 'questions',
@@ -34,6 +36,18 @@ export const routes: Routes = [
         path: 'quiz-game',
         loadComponent: () => import('./questions/questions/questions.component'),
         canActivate: [AuthGuard],
+      },
+      { path: 'results', 
+        loadComponent: () => import('./results/results.component'),
+        canActivate: [AuthGuard],
+      },
+      { path: 'game-history', 
+        loadComponent: () => import('./game-history/game-history.component'),
+        canActivate: [AuthGuard],
+      },
+      { path: 'game-rooms', 
+        loadComponent: () => import('./game-rooms/game-rooms.component'),
+        canActivate: [AuthGuard, roleTeacherGuard],
       },
       {
         path: 'practice-game',

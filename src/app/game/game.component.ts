@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameDataParamsService } from './params/game-data-params.service';
+import { LoadingService } from '../shared/loading.service';
+import { AlertService } from '../shared/alert.service';
 
 @Component({
   selector: 'app-game',
@@ -26,37 +28,33 @@ export default class GameComponent {
   }
 
   submitCode() {
-    console.log('submitCode');
     if (this.gameCode.trim()) {
+      this.loadingService.showLoading();
       this.gameService.submitGameCode(this.gameCode).subscribe({
         next: (response) => {
+          this.loadingService.hideLoading();
           const gameData = response.questions;
-          this.gameDataParamsService.setGameDataLocalStorage(gameData);
-          this.gameDataParamsService.setGameData(gameData);
-          if (this.mode === 'find') {
-            this.router.navigate(['/quiz-game']); 
-          } else if (this.mode === 'practice') {
-            this.router.navigate(['/practice-game']); 
+          if (!gameData || gameData.length === 0) {
+            this.alertService.showAlert('No se encontraron preguntas para el juego, por favor comunicate con tu docente.');
+            return;
+          }else{
+            this.gameDataParamsService.setGameDataLocalStorage(gameData);
+            this.gameDataParamsService.setGameRoomIdLocalStorage(response.game_room_id);
+            this.gameDataParamsService.setGameData(gameData);
+            if (this.mode === 'find') {
+              this.router.navigate(['/quiz-game']); 
+            } else if (this.mode === 'practice') {
+              this.router.navigate(['/practice-game']); 
+            }
           }
         },
         error: (error) => {
-          this.errorMessage = error.message;
-          this.showAlert = true;
-          setTimeout(() => {
-            this.closeAlert();
-          }, 3000);
+          this.loadingService.hideLoading();
+          this.alertService.showAlert(error.message, true);
         },
       });
     } else {
-      this.errorMessage = 'Por favor, ingresa un código válido';
-      this.showAlert = true;
-      setTimeout(() => {
-        this.closeAlert();
-      }, 3000);
+      this.alertService.showAlert('El código del juego no puede estar vacío.', true);
     }
-  }
-
-  closeAlert(): void {
-    this.showAlert = false;
   }
 }

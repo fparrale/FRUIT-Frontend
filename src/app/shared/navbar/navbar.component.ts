@@ -7,6 +7,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { QuestionsService } from '../../questions/services/questions.service';
 import { HttpClientModule } from '@angular/common/http';
 import { filter } from 'rxjs';
+import { ROUTE_NAMES } from '../../../helpers/routes_names';
+import { AuthService } from '../../auth/services/AuthService.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,11 +19,17 @@ import { filter } from 'rxjs';
 })
 export class NavbarComponent {
   isMobile: boolean = false;
-  currentRoute: string = '';
+  currentRouteName: string = '';
+  fullName: string = '';
+  rolName: string = '';
 
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor(private questionService: QuestionsService,  private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private questionService: QuestionsService, 
+    private router: Router
+  ) {}
 
   toggleMenu() {
     this.toggleSidenav.emit();
@@ -32,11 +40,23 @@ export class NavbarComponent {
   }
 
   ngOnInit(): void {
-    this.currentRoute = this.router.url.split('/')[1];
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.currentRoute = event.urlAfterRedirects.split('/')[1];
-      });
+    this.getUserAuthenticaded();
+     // Detectar el cambio de rutas
+     this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Obtener la ruta actual después de la navegación
+        const currentRoute = this.router.url.split('?')[0];
+        this.currentRouteName = ROUTE_NAMES[currentRoute as keyof typeof ROUTE_NAMES] || 'nombre_ruta';
+      }
+    });
+
+    // Configurar el nombre inicial si ya hay una ruta activa al cargar
+    const initialRoute = this.router.url.split('?')[0] || '/home';
+    this.currentRouteName = ROUTE_NAMES[initialRoute as keyof typeof ROUTE_NAMES] || 'b';
+  }
+
+  getUserAuthenticaded():void {
+    this.fullName = this.authService.getUserData()?.user.name + ' ' + this.authService.getUserData()?.user.last_name;
+    this.rolName = this.authService.getUserData()?.user.role.name!;
   }
 }
