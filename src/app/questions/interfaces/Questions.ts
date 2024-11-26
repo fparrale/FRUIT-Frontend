@@ -9,3 +9,22 @@ export interface Question {
     feedback3: string;
     validar: string;
   }
+
+export interface QuestionTransformed {
+  requirement: string;
+  variable: {
+    options: string[];
+    correct: string;
+    feedback: string;
+  };
+  value: {
+    options: string[];
+    correct: string;
+    feedback: string;
+  };
+  recommendation: {
+    options: string[];
+    correct: string;
+    feedback: string;
+  };
+}

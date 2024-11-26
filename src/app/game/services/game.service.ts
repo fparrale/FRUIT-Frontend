@@ -7,8 +7,8 @@ import { AuthService } from '../../auth/services/AuthService.service';
   providedIn: 'root',
 })
 export class GameService {
-  private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/questions/questionsByCode';
-  //private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
+  // private apiUrl = 'https://fuzzy-nfr-quest.up.railway.app/api/questions/questionsByCode';
+  private apiUrl = 'http://localhost:8000/api/questions/questionsByCode';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
 

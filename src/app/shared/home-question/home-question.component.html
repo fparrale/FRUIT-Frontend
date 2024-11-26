@@ -79,10 +79,16 @@
         <p>Start a new game session</p>
       </div>
 
-      <div class="option-card" (click)="findGame()">
+      <div class="option-card" (click)="findGame('find')">
         <div class="icon">🔍</div>
         <h2>Find Game Room</h2>
         <p>Join an existing game session</p>
+      </div>
+
+      <div class="option-card" (click)="findGame('practice')">
+        <div class="icon">🪄</div>
+        <h2>Practice Game Room</h2>
+        <p>Join an existing game session and practice</p>
       </div>
     </main>
 

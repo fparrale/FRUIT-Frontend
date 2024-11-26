@@ -36,6 +36,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'practice-game',
+        loadComponent: () => import('./practice-questions/practice-questions.component').then(m => m.PracticeQuestionsComponent),
+        canActivate: [AuthGuard],
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
