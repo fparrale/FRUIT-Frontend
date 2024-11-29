@@ -9,6 +9,11 @@ import { roleTeacherGuard } from './core/guards/role/role-teacher.guard';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./auth/login/login.component'),
+    canActivate: [AuthenticatedGuard],
+  },
+  {
     path: '',
     loadComponent: () => import('./shared/layout/layout.component'),
     children: [
@@ -55,11 +60,6 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
     ],
-  },
-  {
-    path: 'login',
-    loadComponent: () => import('./auth/login/login.component'),
-    canActivate: [AuthenticatedGuard],
   },
   {
     path : '**',

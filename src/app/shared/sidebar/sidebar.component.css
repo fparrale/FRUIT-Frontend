@@ -63,14 +63,14 @@ a {
   /* Active link styles */
   a.active-link {
     background-color: white;
-    color: #2824f4;
+    color: #0D92F4;
     font-weight: bold;
     border-radius: 8px; /* To maintain the rounded design */
   }
   
   /* Hover effect */
   a:hover {
-    color: #2824f4;
+    color: #0D92F4;
     background-color: #f5f5f5; /* Slightly gray hover effect */
   }
 
