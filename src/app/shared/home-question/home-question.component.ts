@@ -23,9 +23,14 @@ export default class HomeQuestionComponent {
     // Implement create game functionality
   }
 
-  findGame() {
+  findGame(option: string) {
     console.log('Find Game clicked');
     this.router.navigate(['/game']);
+    localStorage.setItem('gameOption', option);
+    this.router.navigate(['/game'], {
+      queryParams: { mode: option }, 
+    });
+    console.log(option);
   }
 
 }
