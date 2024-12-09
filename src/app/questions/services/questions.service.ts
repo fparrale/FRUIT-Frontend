@@ -6,13 +6,17 @@ import { ApiResponse } from '../interfaces/ApiResponse';
 import { AuthService } from '../../auth/services/AuthService.service';
 import { environment } from '../../../environments/environment';
 import { BodyResultsQuestions } from '../interfaces/BodyResultsQuestions';
+import { Question, Questions } from '../interfaces/Questions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionsService {
-  private apiUrlQuestions = environment.apiUrl + 'questions/questionsByCode';
+  private apiUrlQuestions = environment.apiUrl + 'questions/GetInfoAllByCode';
   private apiUrlResultsQuestions = environment.apiUrl + 'quiz';
+
+  private currentQuestionIndex = 0;
+  private readonly timePerStep = 30; 
   
   private againQuestionSource = new Subject<any>();
   againQuestion$ = this.againQuestionSource.asObservable();
@@ -59,6 +63,26 @@ export class QuestionsService {
           );
         })
       );
+  }
+
+  getCurrentQuestion(questions: Questions[]): Question | null {
+    if (this.currentQuestionIndex < questions.length) {
+      return questions[this.currentQuestionIndex];
+    }
+    return null;
+  }
+
+  nextQuestion(questions: Questions[]) {
+    this.currentQuestionIndex++;
+    return this.getCurrentQuestion(questions);
+  }
+
+  resetGame() {
+    this.currentQuestionIndex = 0;
+  }
+
+  calculateScore(timeRemaining: number): number {
+    return Math.max(0, timeRemaining);
   }
   
 }
