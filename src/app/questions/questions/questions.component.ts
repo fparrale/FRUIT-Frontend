@@ -30,6 +30,7 @@ export default class QuestionsComponent implements OnInit {
   currentQuestion: Question | undefined;
   currentQuestionIndex = 0;
   questionWords: string[] = [];
+  otherRecommendedValues: string[] = [];
   variable: string[] = [];
   //feedback1: string[] = [];
   value: string[] = [];
@@ -68,6 +69,7 @@ export default class QuestionsComponent implements OnInit {
     value: string[];
     recomend: string[];
     availableWords: string[];
+    otherRecommendedValues: string[];
   }[] = [];
 
   constructor(
@@ -127,18 +129,20 @@ export default class QuestionsComponent implements OnInit {
       this.variable = this.answers[this.currentQuestionIndex].variable;
       this.value = this.answers[this.currentQuestionIndex].value;
       this.recomend = this.answers[this.currentQuestionIndex].recomend;
-      this.questionWords =
-        this.answers[this.currentQuestionIndex].availableWords;
+      this.questionWords = this.answers[this.currentQuestionIndex].availableWords;
+      this.otherRecommendedValues = this.answers[this.currentQuestionIndex].otherRecommendedValues;
     } else {
       this.variable = [];
       this.value = [];
       this.recomend = [];
       this.questionWords = [...(this.currentQuestion?.nfr.split(' ') || [])];
+      this.otherRecommendedValues = this.currentQuestion?.other_recommended_values.split(',') || [];
       this.answers[this.currentQuestionIndex] = {
         variable: this.variable,
         value: this.value,
         recomend: this.recomend,
         availableWords: this.questionWords,
+        otherRecommendedValues: this.otherRecommendedValues,
       };
     }
   }
@@ -146,7 +150,9 @@ export default class QuestionsComponent implements OnInit {
   againQuestion(): void {
     this.currentQuestion = this.questions[this.currentQuestionIndex];
     this.questionWords.length = 0;
+    this.otherRecommendedValues.length = 0;
     this.questionWords.push(...(this.currentQuestion?.nfr.split(' ') || []));
+    this.otherRecommendedValues.push(...(this.currentQuestion?.other_recommended_values.split(',') || []));
     this.variable = [];
     this.value = [];
     this.recomend = [];
@@ -268,6 +274,7 @@ submitAnswers(): void {
         value: this.value,
         recomend: this.recomend,
         availableWords: this.questionWords,
+        otherRecommendedValues: this.otherRecommendedValues,
       };
     }
   }
@@ -357,24 +364,6 @@ submitAnswers(): void {
     const secs = (seconds % 60).toString().padStart(2, '0');
     return `${hrs}:${mins}:${secs}`;
   }
-
-  // showAlert(message: string, title: string): void {
-  //   this.alertMessage = message;
-  //   this.title = title;
-  //   const alertElement = document.getElementById('customAlert');
-  //   if (alertElement) {
-  //     alertElement.classList.remove('hidden');
-  //   }
-  // }
-
-  // closeAlert(): void {
-  //   const alertElement = document.getElementById('customAlert');
-  //   if (alertElement) {
-  //     alertElement.classList.add('hidden');
-  //   }
-  // }
- 
-
 
   openInfoModal(type: string): void {
     switch (type) {

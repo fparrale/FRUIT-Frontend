@@ -1,29 +1,4 @@
 <div class="py-5">
-    <!-- Contenedor Responsivo -->
-    <div class="flex flex-wrap gap-4 mb-6 items-center justify-between">
-        <!-- Botón Crear Salas -->
-        <button
-            class="flex items-center gap-2 px-4 py-2 text-white bg-[#28A745] rounded-lg shadow-md hover:bg-green-700 focus:outline-none transition duration-300 w-full sm:w-auto text-center justify-center">
-            <span class="material-icons text-base">add</span>
-            <span class="text-sm font-semibold">Crear Salas</span>
-        </button>
-
-        <!-- Input Subir Archivo -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 w-full sm:w-auto">
-            <label class="text-sm font-medium text-gray-700 mb-2 sm:mb-0">
-                Subir Preguntas:
-            </label>
-            <input
-                id="fileInput"
-                type="file"
-                (change)="onFileSelected($event)"
-                accept=".xlsx, .xls"
-                class="block w-full sm:w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-md focus:ring-blue-500 focus:border-blue-500 transition duration-300 cursor-pointer"
-            />
-        </div>
-    </div>
-
-    <!-- Contenedor de tabla responsiva -->
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full table-auto">
@@ -38,8 +13,6 @@
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
                             Fecha de Expiración</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Estado</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
                             Acciones</th>
                     </tr>
                 </thead>
@@ -53,26 +26,11 @@
                         <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ formatDate(gameRooms.expiration_date) }}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                            <span
-                                class="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium border rounded-full"
-                                [ngClass]="gameRooms.status ? 'bg-green-100 text-green-800 border-green-300' : 'bg-red-100 text-red-800 border-red-300'">
-                                <span class="w-2.5 h-2.5 rounded-full"
-                                    [ngClass]="gameRooms.status ? 'bg-green-500' : 'bg-red-500'">
-                                </span>
-                                {{ gameRooms.status ? 'Activo' : 'Inactivo' }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
                             <div class="flex gap-2">
                                 <button
-                                (click)="onEdit(gameRooms)"
-                                    class="px-2 py-1 text-xs font-medium text-white bg-[#0D92F4] rounded hover:bg-blue-700 focus:outline-none">
-                                    Editar
-                                </button>
-                                <button
-                                (click)="onDelete(gameRooms)"
-                                    class="px-2 py-1 text-xs font-medium text-white bg-[#C62E2E] rounded hover:bg-red-700 focus:outline-none">
-                                    Eliminar
+                                (click)="onGenerateReportGameRoom(gameRooms)"
+                                    class="px-2 py-1 text-xs font-medium text-white bg-[#28A745] rounded hover:bg-green-700 focus:outline-none">
+                                    Generar Reporte
                                 </button>
                             </div>
                         </td>

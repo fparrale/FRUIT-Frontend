@@ -1,5 +1,4 @@
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './auth/register/register.component';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthenticatedGuard } from './core/guards/authenticated.guard';
@@ -11,6 +10,16 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./auth/login/login.component'),
+    canActivate: [AuthenticatedGuard],
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./auth/register/register.component'),
+    canActivate: [AuthenticatedGuard],
+  },
+  {
+    path: 'forget-password',
+    loadComponent: () => import('./auth/forget-password/forget-password.component'),
     canActivate: [AuthenticatedGuard],
   },
   {
@@ -52,6 +61,10 @@ export const routes: Routes = [
       },
       { path: 'game-rooms', 
         loadComponent: () => import('./game-rooms/game-rooms.component'),
+        canActivate: [AuthGuard, roleTeacherGuard],
+      },
+      { path: 'report', 
+        loadComponent: () => import('./report/report.component'),
         canActivate: [AuthGuard, roleTeacherGuard],
       },
       {

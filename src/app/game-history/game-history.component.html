@@ -44,7 +44,7 @@
           *ngFor="let page of [].constructor(totalPages); let i = index"
           class="px-4 py-2 text-sm font-medium border rounded-md transition-colors duration-300"
           [ngClass]="currentPage === i + 1 
-            ? 'bg-blue-500 text-white border-blue-500' 
+            ? 'bg-[#0D92F4] text-white border-blue-500' 
             : 'bg-gray-100 text-gray-500 border-gray-300 hover:bg-gray-200 hover:text-gray-700'"
           (click)="goToPage(i + 1)"
         >

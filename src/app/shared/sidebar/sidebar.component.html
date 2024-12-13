@@ -1,6 +1,6 @@
 <!-- Botón de apertura (visible solo en móviles) -->
 <button
-  class="fixed z-50 top-6 left-6 p-3 bg-blue-600 text-white rounded-full shadow-md xl:hidden hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
+  class="fixed z-50 top-6 left-6 p-3 bg-[#0D92F4] text-white rounded-full shadow-md xl:hidden hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
   [ngClass]="{ 'hidden': menuOpen }" (click)="toggleMenu($event)">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
     class="w-6 h-6">
@@ -66,7 +66,7 @@
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M15 10l4.553 2.276A1 1 0 0120 13.132V16m-4.553 2.276A1 1 0 0115 18.268V21m-6 0h6m0-2H7m0-4V7m6-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
-        <span class="text-[#333333] text-base font-medium">Salas de Juegos</span>
+        <span class="text-base font-medium">Salas de Juegos</span>
       </a>
     </li>
 
@@ -95,6 +95,19 @@
             d="M15 10l4.553 2.276A1 1 0 0120 13.132V16m-4.553 2.276A1 1 0 0115 18.268V21m-6 0h6m0-2H7m0-4V7m6-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
         <span class="text-base font-medium">Juego</span>
+      </a>
+    </li>
+
+    <!-- Reporte -->
+    <li *ngIf="canShowItemTeacher()">
+      <a routerLink="/report" routerLinkActive="active-link"
+        class="flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-gray-100"
+        (click)="onOptionClick()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 2H8a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-5-6zM13 9V3.5L18.5 9H13z" fill="#FFFFF"/>
+          <text x="8" y="17" font-size="6" fill="white" font-family="Arial, sans-serif" font-weight="bold">PDF</text>
+        </svg>
+        <span class="text-base font-medium">Reporte</span>
       </a>
     </li>
 

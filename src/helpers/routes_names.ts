@@ -6,5 +6,6 @@ export const ROUTE_NAMES = {
     '/results': 'Resultados',
     '/users': 'Usuarios',
     '/game-rooms': 'Salas de Juego',
+    '/report': 'Reporte',
   };
   

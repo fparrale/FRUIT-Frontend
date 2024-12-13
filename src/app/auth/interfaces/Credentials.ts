@@ -22,3 +22,25 @@ export interface Role {
   name: string;
   description: string;
 }
+
+export interface RegisterUser {
+  name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  birth_date: string;
+  password: string;
+  role: number | '';
+}
+
+export interface SendCode{
+  email: string;
+}
+
+export interface PasswordReset{
+  email: string;
+  otp: number | null;
+  password: string;
+  password_confirmation: string;
+}
+

@@ -36,4 +36,10 @@ export default class LoginComponent {
       },
     });
   }
+
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }
