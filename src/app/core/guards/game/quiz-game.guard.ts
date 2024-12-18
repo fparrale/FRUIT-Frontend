@@ -6,6 +6,17 @@ export const quizGameGuard: CanActivateFn = (route, state) => {
   const quizGame = inject(GameDataParamsService);
   const router = inject(Router);
 
+  const gameOption = localStorage.getItem('gameOption');
+
+  if (gameOption === 'practice') {
+    if (quizGame.getGamePracticeDataLocalStorage() == null) {
+      return true;
+    } else {
+      router.navigate(['/practice-game']);
+      return false;
+    }
+  }
+
   if (quizGame.getGameDataLocalStorage() == null) {
     return true;
   } else {
