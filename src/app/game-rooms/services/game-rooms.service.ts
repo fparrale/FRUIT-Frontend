@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { AuthService } from '../../auth/services/AuthService.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+import { createRnfGameRoomService, GameRoomRnf } from '../interfaces/game-rooms';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class GameRoomsService {
   private apiurlDeleteGameRoom = environment.apiUrl + 'delete-game-room';
   private apiurlUploadExcel = environment.apiUrl + 'questions/import';
   private apiUrlGenerateReportGameRoom = environment.apiUrl + 'generate-report-teacher-game-room';
+  private apiUrlCreateGameRoom = environment.apiUrl + 'create-room-game-questions';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -47,7 +49,7 @@ export class GameRoomsService {
     });
 
     return this.http
-      .post<any>(this.apiurlDeleteGameRoom,{game_room_id, status},{ headers })
+      .post<any>(this.apiurlDeleteGameRoom, {game_room_id, status},{ headers })
       .pipe(
         tap((response) => {
           return response;
@@ -120,6 +122,30 @@ export class GameRoomsService {
 
     return this.http
       .post<any>(this.apiurlUploadExcel, formData ,{ headers })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(
+            () =>
+              new Error(
+                error.error.message || 'Ocurrio un error intentalo mas tarde'
+              )
+          );
+        })
+      );
+  }
+
+  createGameRoom(body: GameRoomRnf): Observable<any> {
+    const userData = this.authService.getUserData();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${userData?.access_token}`,
+    });
+
+    return this.http
+      .post<any>(this.apiUrlCreateGameRoom, body,{ headers })
       .pipe(
         tap((response) => {
           return response;

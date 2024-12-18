@@ -1,29 +1,37 @@
 <div class="py-5">
-    <!-- Contenedor Responsivo -->
     <div class="flex flex-wrap gap-4 mb-6 items-center justify-between">
-        <!-- Botón Crear Salas -->
-        <button
+        <button (click)="goToCreateGameRoom()"
             class="flex items-center gap-2 px-4 py-2 text-white bg-[#28A745] rounded-lg shadow-md hover:bg-green-700 focus:outline-none transition duration-300 w-full sm:w-auto text-center justify-center">
             <span class="material-icons text-base">add</span>
-            <span class="text-sm font-semibold">Crear Salas</span>
+            Crear Sala
         </button>
 
-        <!-- Input Subir Archivo -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 w-full sm:w-auto">
-            <label class="text-sm font-medium text-gray-700 mb-2 sm:mb-0">
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <div class="flex items-center gap-2">
+              <label for="fileInput" class="text-sm font-medium text-gray-700">
                 Subir Preguntas:
-            </label>
-            <input
+              </label>
+              <input
                 id="fileInput"
                 type="file"
                 (change)="onFileSelected($event)"
                 accept=".xlsx, .xls"
-                class="block w-full sm:w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-md focus:ring-blue-500 focus:border-blue-500 transition duration-300 cursor-pointer"
-            />
-        </div>
+                class="w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300 cursor-pointer"
+              />
+            </div>
+          
+            <a
+              href="../../assets/example.xlsx"
+              download="example.xlsx"
+              class="flex items-center bg-green-500 text-white font-medium px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+            >
+              <span class="material-icons pr-1">download</span>
+              Descargar Excel de Ejemplo
+            </a>
+          </div>
+          
     </div>
 
-    <!-- Contenedor de tabla responsiva -->
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full table-auto">
@@ -64,11 +72,11 @@
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
                             <div class="flex gap-2">
-                                <button
+                                <!-- <button
                                 (click)="onEdit(gameRooms)"
                                     class="px-2 py-1 text-xs font-medium text-white bg-[#0D92F4] rounded hover:bg-blue-700 focus:outline-none">
                                     Editar
-                                </button>
+                                </button> -->
                                 <button
                                 (click)="onDelete(gameRooms)"
                                     class="px-2 py-1 text-xs font-medium text-white bg-[#C62E2E] rounded hover:bg-red-700 focus:outline-none">
@@ -82,7 +90,6 @@
         </div>
     </div>
 
-    <!-- Paginación -->
     <div class="flex justify-center items-center mt-6 space-x-2">
         <button
             class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"

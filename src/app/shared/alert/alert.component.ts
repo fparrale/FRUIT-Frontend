@@ -13,12 +13,10 @@ import { CommonModule } from '@angular/common';
     >
       <div class="bg-white p-6 rounded-2xl shadow-lg w-96">
         <div class="flex flex-col items-center">
-          <!-- Icono de error ajustado -->
           <div
             class="flex items-center justify-center w-12 h-12 rounded-full mb-6"
             [ngClass]="alert.type ? 'bg-red-500' : 'bg-green-500'"
           >
-            <!-- Icono de error -->
             <svg
               *ngIf="alert.type"
               class="w-8 h-8"
@@ -32,7 +30,6 @@ import { CommonModule } from '@angular/common';
               <line x1="6" y1="18" x2="18" y2="6" />
             </svg>
 
-            <!-- Icono de éxito -->
             <svg
               *ngIf="!alert.type"
               class="w-8 h-8"
@@ -49,7 +46,6 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <!-- Título del mensaje de error -->
           <h6
             *ngIf="alert.type === true"
             class="text-lg font-bold text-gray-800 mb-4"
@@ -62,7 +58,6 @@ import { CommonModule } from '@angular/common';
           >
             Mensaje de éxito
           </h6>
-          <!-- Mensaje de error -->
           <p [innerHTML]="alert.message" class="text-center text-gray-600 text-md mb-8">
            
           </p>

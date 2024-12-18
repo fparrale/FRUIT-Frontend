@@ -53,6 +53,10 @@ export class SidebarComponent implements OnInit {
     return this.userRoleId === 1;
   }
 
+  canShowItemStudent(): boolean {
+    return this.userRoleId === 2;
+  }
+
   // ngOnInit() {
   //   this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
   //     if (screenSize.matches) {

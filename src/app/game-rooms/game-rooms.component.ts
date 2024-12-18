@@ -4,6 +4,7 @@ import { AlertService } from '../shared/alert.service';
 import { LoadingService } from '../shared/loading.service';
 import { CommonModule } from '@angular/common';
 import { json } from 'node:stream/consumers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game-rooms',
@@ -25,6 +26,7 @@ export default class GameRoomsComponent implements OnInit{
     private gameRoomsService: GameRoomsService,
     private alertService: AlertService, 
     private loadingService: LoadingService, 
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -158,5 +160,9 @@ export default class GameRoomsComponent implements OnInit{
       second: '2-digit',
     };
     return date.toLocaleDateString('es-ES', options).replace(',', '');
+  }
+
+  goToCreateGameRoom () : void{
+    this.router.navigate(["/create-game-room"]);
   }
 }

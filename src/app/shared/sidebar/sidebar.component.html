@@ -72,7 +72,7 @@
 
 
     <!-- Historial -->
-    <li>
+    <li *ngIf="canShowItemStudent()">
       <a routerLink="/game-history" routerLinkActive="active-link"
         class="flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-gray-100"
         (click)="onOptionClick()">
@@ -85,7 +85,7 @@
     </li>
 
     <!-- Juego -->
-    <li>
+    <li *ngIf="canShowItemStudent()">
       <a routerLink="/game" routerLinkActive="active-link"
         class="flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-gray-100"
         (click)="onOptionClick()">
