@@ -1,26 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../auth/services/AuthService.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home-question',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './home-question.component.html',
   styleUrl: './home-question.component.css'
 })
-export default class HomeQuestionComponent {
+export default class HomeQuestionComponent implements OnInit {
 
-  constructor(private router: 
-    Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
+  userRoleId: number = 0;
+
+  ngOnInit(): void {
+    const userData = this.authService.getUserData();
+    this.userRoleId = userData?.user.role.id ?? 0;
+  }
 
   importQuestions() {
-    console.log('Import Questions clicked');
-    // Implement import questions functionality
+    this.router.navigate(['/game-rooms']);
   }
 
   createGame() {
-    console.log('Create Game clicked');
-    // Implement create game functionality
+    this.router.navigate(['/create-game-room']);
   }
 
   findGame(option: string) {
@@ -31,6 +36,14 @@ export default class HomeQuestionComponent {
       queryParams: { mode: option }, 
     });
     console.log(option);
+  }
+
+  canShowItemTeacher(): boolean {
+    return this.userRoleId === 1;
+  }
+
+  canShowItemStudent(): boolean {
+    return this.userRoleId === 2;
   }
 
 }

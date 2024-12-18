@@ -1,9 +1,9 @@
 <div class="">
-  <!-- Main Content -->
+
   <main class="container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Import Questions -->
-      <div
+
+      <div *ngIf="canShowItemTeacher()"
         class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow cursor-pointer"
         (click)="importQuestions()"
       >
@@ -12,8 +12,7 @@
         <p class="text-gray-600">Sube o importa tus conjuntos de preguntas</p>
       </div>
 
-      <!-- Create Game -->
-      <div
+      <div *ngIf="canShowItemTeacher()"
         class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow cursor-pointer"
         (click)="createGame()"
       >
@@ -22,8 +21,7 @@
         <p class="text-gray-600">Inicia una nueva sesión de juego</p>
       </div>
 
-      <!-- Find Game -->
-      <div
+      <div *ngIf="canShowItemStudent()"
         class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow cursor-pointer"
         (click)="findGame('find')"
       >
@@ -32,7 +30,7 @@
         <p class="text-gray-600">Únete a una sesión de juego existente</p>
       </div>
 
-      <div
+      <div *ngIf="canShowItemStudent()"
         class="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow cursor-pointer"
         (click)="findGame('practice')"
       >
