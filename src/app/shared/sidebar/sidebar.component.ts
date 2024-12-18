@@ -57,6 +57,12 @@ export class SidebarComponent implements OnInit {
     return this.userRoleId === 2;
   }
 
+  // routeGame() : void {
+  //   this.router.navigate(['/game'], {
+  //     queryParams: { mode: 'find' }, 
+  //   });
+  // }
+
   // ngOnInit() {
   //   this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
   //     if (screenSize.matches) {

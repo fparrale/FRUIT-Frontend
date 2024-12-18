@@ -65,7 +65,7 @@ export class QuestionsService {
       );
   }
 
-  getCurrentQuestion(questions: Questions[]): Question | null {
+  getCurrentQuestion(questions: Questions[]): Questions | null {
     if (this.currentQuestionIndex < questions.length) {
       return questions[this.currentQuestionIndex];
     }

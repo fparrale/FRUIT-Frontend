@@ -86,7 +86,7 @@
 
     <!-- Juego -->
     <li *ngIf="canShowItemStudent()">
-      <a routerLink="/game" routerLinkActive="active-link"
+      <a routerLink="/game" [queryParams]="{ mode: 'find'}" routerLinkActive="active-link"
         class="flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-gray-100"
         (click)="onOptionClick()">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2"
