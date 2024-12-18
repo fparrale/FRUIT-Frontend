@@ -26,6 +26,9 @@ export default class ResultsComponent implements OnInit {
       // const gameResult = localStorage.getItem('gameResult'); //BORRAR
       // this.resultData = gameResult ? JSON.parse(gameResult) : null; //BORRAR
       this.router.navigate(['/game']);
+      this.router.navigate(['/game'], {
+        queryParams: { mode: 'find' }, 
+      });
     }
   }
 

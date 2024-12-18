@@ -5,6 +5,7 @@ import { AuthenticatedGuard } from './core/guards/authenticated.guard';
 import { quizGameGuard } from './core/guards/game/quiz-game.guard';
 import { roleAdminGuard } from './core/guards/role/role-admin.guard';
 import { roleTeacherGuard } from './core/guards/role/role-teacher.guard';
+import { roleStudentGuard } from './core/guards/role/role-student.guard';
 
 export const routes: Routes = [
   {
@@ -36,28 +37,28 @@ export const routes: Routes = [
         loadComponent: () => import('./users/users.component'),
         canActivate: [AuthGuard, roleAdminGuard],
       },
-      {
-        path: 'questions',
-        loadComponent: () => import('./questions/questions/questions.component'),
-        canActivate: [AuthGuard],
-      },
+      // {
+      //   path: 'questions',
+      //   loadComponent: () => import('./questions/questions/questions.component'),
+      //   canActivate: [AuthGuard, roleStudentGuard],
+      // },
       {
         path: 'game',
         loadComponent: () => import('./game/game.component'),
-        canActivate: [AuthGuard, quizGameGuard],
+        canActivate: [AuthGuard, quizGameGuard, roleStudentGuard],
       },
       {
         path: 'quiz-game',
         loadComponent: () => import('./questions/questions/questions.component'),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, roleStudentGuard],
       },
       { path: 'results', 
         loadComponent: () => import('./results/results.component'),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, roleStudentGuard],
       },
       { path: 'game-history', 
         loadComponent: () => import('./game-history/game-history.component'),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, roleStudentGuard],
       },
       { path: 'game-rooms', 
         loadComponent: () => import('./game-rooms/game-rooms.component'),
@@ -74,7 +75,7 @@ export const routes: Routes = [
       {
         path: 'practice-game',
         loadComponent: () => import('./practice-questions/practice-questions.component').then(m => m.PracticeQuestionsComponent),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, roleStudentGuard],
       },
       {
         path: '',

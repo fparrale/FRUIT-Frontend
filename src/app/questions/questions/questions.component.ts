@@ -106,6 +106,9 @@ export default class QuestionsComponent implements OnInit {
         this.showQuestion();
       } else {
         this.router.navigate(['/game']);
+        this.router.navigate(['/game'], {
+          queryParams: { mode: 'find' }, 
+        });
       }
     }
 
