@@ -92,6 +92,8 @@ export class SidebarComponent implements OnInit {
     this.authService.logout();
     this.gameDataParamsService.removeGameRoomIdLocalStorage();
     this.gameDataParamsService.clearGameDataLocalStorage();
+    this.gameDataParamsService.removeGameRoomOptionLocalStorage();
+    this.gameDataParamsService.clearGameDataPractice();
   }
 
   isRouteActive(): boolean {

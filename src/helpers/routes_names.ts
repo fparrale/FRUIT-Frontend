@@ -7,6 +7,7 @@ export const ROUTE_NAMES = {
     '/users': 'Usuarios',
     '/game-rooms': 'Salas de Juego',
     '/report': 'Reporte',
-    '/create-game-room': 'Crear Sala de Juego'
+    '/create-game-room': 'Crear Sala de Juego',
+    '/practice-game': 'Sala de practica'
   };
   

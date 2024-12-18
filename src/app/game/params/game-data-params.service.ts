@@ -40,6 +40,10 @@ export class GameDataParamsService {
     localStorage.removeItem('gameRoomId');
   }
 
+  removeGameRoomOptionLocalStorage() {
+    localStorage.removeItem('gameOption');
+  }
+
   getGameDataLocalStorage() {
     const data = localStorage.getItem('gameData');
     if (data != null) {  
@@ -60,6 +64,10 @@ export class GameDataParamsService {
 
   clearGameDataLocalStorage() {
     localStorage.removeItem('gameData');
+  }
+
+  clearGameDataPractice(){
+    localStorage.removeItem('gameDataPractice');
   }
 
   clearGamePracticeDataLocalStorage() {
