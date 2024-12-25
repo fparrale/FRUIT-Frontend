@@ -1,4 +1,22 @@
 {
-    "TITLE": "Welcome",
-    "DESCRIPTION": "This is an example of multi-language support"
+  "LOGIN": {
+    "GAME": "Let's play!",
+    "TITLE": "Login",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "BUTTON": "Log in",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "NO_ACCOUNT": "Don't have an account?",
+    "SIGN_UP": "Sign up",
+    "SELECT_LANGUAGE": "Select Language",
+    "ENGLISH": "English",
+    "SPANISH": "Spanish",
+    "ERROR": {
+      "INVALID_CREDENTIALS": "Invalid credentials",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_INVALID": "Email is invalid",
+      "PASSWORD_REQUIRED": "Password is required",
+      "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters long"
+    }
   }
+}

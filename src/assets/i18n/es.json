@@ -1,4 +1,22 @@
 {
-    "TITLE": "Bienvenido",
-    "DESCRIPTION": "Este es un ejemplo de soporte multilingüe"
+  "LOGIN": {
+    "GAME": "¡vamos a jugar!",
+    "TITLE": "Iniciar sesión",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "BUTTON": "Iniciar sesión",
+    "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+    "NO_ACCOUNT": "¿No tienes una cuenta?",
+    "SIGN_UP": "Regístrate",
+    "SELECT_LANGUAGE": "Seleccionar Idioma",
+    "ENGLISH": "Inglés",
+    "SPANISH": "Español",
+    "ERROR": {
+      "INVALID_CREDENTIALS": "Credenciales inválidas",
+      "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
+      "EMAIL_INVALID": "El correo electrónico es inválido",
+      "PASSWORD_REQUIRED": "La contraseña es obligatoria",
+      "PASSWORD_MIN_LENGTH": "La contraseña debe tener al menos 6 caracteres"
+    }
   }
+}
