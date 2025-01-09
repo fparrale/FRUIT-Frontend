@@ -14,8 +14,8 @@ export class AuthService {
   private apiUrlLogin = environment.apiUrl + 'auth/login';
   private apiUrlRegister = environment.apiUrl + 'auth/register';
   private apiUrlRoles = environment.apiUrl + 'auth/roles';
-  private apiUrlSendCode = environment.apiUrl + 'password/send-otp';
-  private apiUrlPasswordReset = environment.apiUrl + 'password/reset-otp';
+  private apiUrlSendCode = environment.apiUrl + 'change-password/send-otp';
+  private apiUrlPasswordReset = environment.apiUrl + 'change-password/reset-otp';
   //private currentUser: UserData | null = null;
   private userDataKey = 'userData';
 

@@ -13,11 +13,11 @@ import { CommonModule } from '@angular/common';
 export default class HomeQuestionComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService) {}
-  userRoleId: number = 0;
+  userRoleId: string = '';
 
   ngOnInit(): void {
     const userData = this.authService.getUserData();
-    this.userRoleId = userData?.user.role.id ?? 0;
+    this.userRoleId = userData?.user.role.name ?? '';
   }
 
   importQuestions() {
@@ -39,11 +39,11 @@ export default class HomeQuestionComponent implements OnInit {
   }
 
   canShowItemTeacher(): boolean {
-    return this.userRoleId === 1;
+    return this.userRoleId === 'Docente';
   }
 
   canShowItemStudent(): boolean {
-    return this.userRoleId === 2;
+    return this.userRoleId === 'Estudiante';
   }
 
 }

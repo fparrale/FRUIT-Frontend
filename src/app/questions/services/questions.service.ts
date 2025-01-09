@@ -13,7 +13,7 @@ import { Question, Questions } from '../interfaces/Questions';
 })
 export class QuestionsService {
   private apiUrlQuestions = environment.apiUrl + 'questions/GetInfoAllByCode';
-  private apiUrlResultsQuestions = environment.apiUrl + 'quiz';
+  private apiUrlResultsQuestions = environment.apiUrl + 'quiz/quiz';
 
   private currentQuestionIndex = 0;
   private readonly timePerStep = 30; 

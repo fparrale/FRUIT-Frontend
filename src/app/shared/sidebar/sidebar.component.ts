@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
 
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  userRoleId: number = 0;
+  userRoleId: string = '';
 
   constructor(
     private observer: BreakpointObserver,
@@ -42,19 +42,19 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     const userData = this.authService.getUserData();
-    this.userRoleId = userData?.user.role.id ?? 0;
+    this.userRoleId = userData?.user.role.name ?? '';
   }
 
   canShowItemAdmin(): boolean {
-    return this.userRoleId === 3;
+    return this.userRoleId === 'Administrador';
   }
 
   canShowItemTeacher(): boolean {
-    return this.userRoleId === 1;
+    return this.userRoleId === 'Docente';
   }
 
   canShowItemStudent(): boolean {
-    return this.userRoleId === 2;
+    return this.userRoleId === 'Estudiante';
   }
 
   // routeGame() : void {

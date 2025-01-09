@@ -18,5 +18,15 @@
       "PASSWORD_REQUIRED": "La contraseña es obligatoria",
       "PASSWORD_MIN_LENGTH": "La contraseña debe tener al menos 6 caracteres"
     }
+  },
+  "Reset Password": {
+    "TITLE": "Restablecer la contraseña",
+    "EMAIL": "Correo electrónico",
+    "BUTTON": "Enviar",
+    "BACK": "Volver",
+    "ERROR": {
+      "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
+      "EMAIL_INVALID": "El correo electrónico es inválido"
+    }
   }
 }

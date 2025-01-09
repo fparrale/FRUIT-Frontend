@@ -9,7 +9,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 })
 
 export class GameHistoryService {
-  private apiUrl = environment.apiUrl + 'game-history';
+  private apiUrl = environment.apiUrl + 'game/game-history';
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   getGameHistory(): Observable<any> {

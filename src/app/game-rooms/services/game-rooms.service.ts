@@ -9,11 +9,11 @@ import { createRnfGameRoomService, GameRoomRnf } from '../interfaces/game-rooms'
   providedIn: 'root'
 })
 export class GameRoomsService {
-  private apiUrlGameRooms = environment.apiUrl + 'game-rooms';
-  private apiurlDeleteGameRoom = environment.apiUrl + 'delete-game-room';
+  private apiUrlGameRooms = environment.apiUrl + 'game/game-rooms';
+  private apiurlDeleteGameRoom = environment.apiUrl + 'game/delete-game-room';
   private apiurlUploadExcel = environment.apiUrl + 'questions/import';
-  private apiUrlGenerateReportGameRoom = environment.apiUrl + 'generate-report-teacher-game-room';
-  private apiUrlCreateGameRoom = environment.apiUrl + 'create-room-game-questions';
+  private apiUrlGenerateReportGameRoom = environment.apiUrl + 'report/generate-report-teacher-game-room';
+  private apiUrlCreateGameRoom = environment.apiUrl + 'game/create-room-game-questions';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

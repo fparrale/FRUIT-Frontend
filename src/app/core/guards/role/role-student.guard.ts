@@ -6,7 +6,7 @@ export const roleStudentGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
     const router = inject(Router);
   
-    if (authService.getUserData()?.user.role.id == 2) {
+    if (authService.getUserData()?.user.role.name == 'Estudiante') {
       return true;
     }
     
