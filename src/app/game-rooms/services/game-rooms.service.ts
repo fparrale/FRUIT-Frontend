@@ -11,7 +11,7 @@ import { createRnfGameRoomService, GameRoomRnf } from '../interfaces/game-rooms'
 export class GameRoomsService {
   private apiUrlGameRooms = environment.apiUrl + 'game/game-rooms';
   private apiurlDeleteGameRoom = environment.apiUrl + 'game/delete-game-room';
-  private apiurlUploadExcel = environment.apiUrl + 'questions/import';
+  private apiurlUploadExcel = environment.apiUrl + 'question/UploadQuestion';
   private apiUrlGenerateReportGameRoom = environment.apiUrl + 'report/generate-report-teacher-game-room';
   private apiUrlCreateGameRoom = environment.apiUrl + 'game/create-room-game-questions';
 
