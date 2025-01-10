@@ -110,10 +110,7 @@ export class GameRoomsService {
     );
   }
 
-  uploadExcel(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('archivo', file);
-
+  uploadExcel(file: Array<createRnfGameRoomService>): Observable<any> {
     const userData = this.authService.getUserData();
 
     const headers = new HttpHeaders({
@@ -121,7 +118,7 @@ export class GameRoomsService {
     });
 
     return this.http
-      .post<any>(this.apiurlUploadExcel, formData ,{ headers })
+      .post<any>(this.apiurlUploadExcel, file ,{ headers })
       .pipe(
         tap((response) => {
           return response;
