@@ -5,6 +5,10 @@ import { LoadingService } from '../shared/loading.service';
 import { CommonModule } from '@angular/common';
 import { json } from 'node:stream/consumers';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
+import * as Papa from 'papaparse';
+import { createRnfGameRoomService } from './interfaces/game-rooms';
+
 
 @Component({
   selector: 'app-game-rooms',
@@ -21,6 +25,8 @@ export default class GameRoomsComponent implements OnInit{
   currentPage = 1;
   itemsPerPage = 5;
   selectedFile: File | null = null;
+
+  listRnf: Array<createRnfGameRoomService> = [];
 
   constructor(
     private gameRoomsService: GameRoomsService,
@@ -73,6 +79,51 @@ export default class GameRoomsComponent implements OnInit{
     console.log('onEdit', gameRooms.id);
   }
 
+  transformExcelToCsv(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const data = new Uint8Array(e.target.result);
+        const arr = new Array();
+        for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+        const bstr = arr.join("");
+        const workbook = XLSX.read(bstr, { type: "binary" });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const csv = XLSX.utils.sheet_to_csv(worksheet);
+        resolve(csv);
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  parseCsvToArray(csv: string): void {
+    Papa.parse(csv, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+            this.listRnf = result.data as Array<createRnfGameRoomService>;
+            this.gameRoomsService.uploadExcel(this.listRnf).subscribe({
+              next: (response) => {
+                this.loadingService.hideLoading();
+                this.alertService.showAlert(response.message, false);
+                this.getGameRooms();
+              },
+              error: (error) => {
+                this.loadingService.hideLoading();
+                this.alertService.showAlert('Error al subir el archivo', true);
+                console.error('Error al subir archivo:', error);
+              },
+            });
+        },
+        error: (error: any) => {
+            console.error('Error parsing CSV:', error);
+        }
+    });
+}
+
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -87,20 +138,31 @@ export default class GameRoomsComponent implements OnInit{
     }
     
     this.loadingService.showLoading();
-    this.gameRoomsService.uploadExcel(selectedFile).subscribe({
-      next: (response) => {
-        this.loadingService.hideLoading();
-        this.alertService.showAlert(response.message, false);
-        this.getGameRooms();
-        input.value = '';
-      },
-      error: (error) => {
+    this.transformExcelToCsv(selectedFile)
+      .then((csv) => {
+        this.parseCsvToArray(csv);
         this.loadingService.hideLoading();
         input.value = '';
-        this.alertService.showAlert('Error al subir el archivo', true);
-        console.error('Error al subir archivo:', error);
-      },
-    });
+      })
+      .catch((error) => {
+        input.value = '';
+        this.loadingService.hideLoading();
+        this.alertService.showAlert('Error al subir el archivo', error);
+      });
+    // this.gameRoomsService.uploadExcel(selectedFile).subscribe({
+    //   next: (response) => {
+    //     this.loadingService.hideLoading();
+    //     this.alertService.showAlert(response.message, false);
+    //     this.getGameRooms();
+    //     input.value = '';
+    //   },
+    //   error: (error) => {
+    //     this.loadingService.hideLoading();
+    //     input.value = '';
+    //     this.alertService.showAlert('Error al subir el archivo', true);
+    //     console.error('Error al subir archivo:', error);
+    //   },
+    // });
   }
   }
 
