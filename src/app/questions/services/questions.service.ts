@@ -12,7 +12,7 @@ import { Question, Questions } from '../interfaces/Questions';
   providedIn: 'root'
 })
 export class QuestionsService {
-  private apiUrlQuestions = environment.apiUrl + 'questions/GetInfoAllByCode';
+  private apiUrlQuestions = environment.apiUrl + 'questions/questionInfoBycode';
   private apiUrlResultsQuestions = environment.apiUrl + 'quiz/quiz';
 
   private currentQuestionIndex = 0;
