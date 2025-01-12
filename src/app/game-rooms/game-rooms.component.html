@@ -3,13 +3,13 @@
         <button (click)="goToCreateGameRoom()"
             class="flex items-center gap-2 px-4 py-2 text-white bg-[#28A745] rounded-lg shadow-md hover:bg-green-700 focus:outline-none transition duration-300 w-full sm:w-auto text-center justify-center">
             <span class="material-icons text-base">add</span>
-            Crear Sala
+            {{ 'GAME_ROOM.BUTTON_CREATE' | translate }}
         </button>
 
         <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <div class="flex items-center gap-2">
               <label for="fileInput" class="text-sm font-medium text-gray-700">
-                Subir Preguntas:
+                {{ 'GAME_ROOM.UPLOAD_QUESTION' | translate }}
               </label>
               <input
                 id="fileInput"
@@ -26,7 +26,7 @@
               class="flex items-center bg-green-500 text-white font-medium px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
             >
               <span class="material-icons pr-1">download</span>
-              Descargar Excel de Ejemplo
+              {{ 'GAME_ROOM.EXCEL_FILE' | translate }}
             </a>
           </div>
           
@@ -40,15 +40,15 @@
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
                             Id</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Codigo</th>
+                            {{'TABLE.CODE' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Fecha de Creación</th>
+                            {{'TABLE.CREATION_DATE' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Fecha de Expiración</th>
+                            {{'TABLE.EXPIRATION_DATE' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Estado</th>
+                            {{'TABLE.STATUS' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Acciones</th>
+                            {{'TABLE.ACTIONS' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                                 <span class="w-2.5 h-2.5 rounded-full"
                                     [ngClass]="gameRooms.status ? 'bg-green-500' : 'bg-red-500'">
                                 </span>
-                                {{ gameRooms.status ? 'Activo' : 'Inactivo' }}
+                                {{ gameRooms.status ? ('GAME_ROOM.ASSET' | translate) : ('GAME_ROOM.IDLE' | translate)}}
                             </span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
@@ -80,7 +80,7 @@
                                 <button
                                 (click)="onDelete(gameRooms)"
                                     class="px-2 py-1 text-xs font-medium text-white bg-[#C62E2E] rounded hover:bg-red-700 focus:outline-none">
-                                    Eliminar
+                                    {{('GAME_ROOM.ELIMINATED' | translate)}}
                                 </button>
                             </div>
                         </td>
@@ -96,7 +96,7 @@
             [disabled]="currentPage === 1"
             [ngClass]="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''"
             (click)="prevPage()">
-            &laquo; Anterior
+            &laquo; {{ 'BUTTON_NAVIGATION_TABLE.PREVIOUS' | translate }}
         </button>
         <button *ngFor="let page of [].constructor(totalPages); let i = index"
             class="px-4 py-2 text-sm font-medium border rounded-md transition-colors duration-300"
@@ -111,7 +111,7 @@
             [disabled]="currentPage === totalPages"
             [ngClass]="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''" 
             (click)="nextPage()">
-            Siguiente &raquo;
+            {{ 'BUTTON_NAVIGATION_TABLE.NEXT' | translate }} &raquo;
         </button>
     </div>
 </div>

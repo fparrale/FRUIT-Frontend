@@ -1,22 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PasswordReset, SendCode } from '../interfaces/Credentials';
 import { LoadingService } from '../../shared/loading.service';
 import { AlertService } from '../../shared/alert.service';
 import { AuthService } from '../services/AuthService.service';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { StorageService } from '../../shared/storage.service';
 
 @Component({
   selector: 'app-forget-password',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.css'
 })
-export default class ForgetPasswordComponent{
+export default class ForgetPasswordComponent implements OnInit{
 
-  constructor(private alertService: AlertService, private loadingService: LoadingService, private authService: AuthService, private router: Router){}
+  constructor(private translate: TranslateService, 
+    private alertService: AlertService, 
+    private loadingService: LoadingService, 
+    private authService: AuthService, 
+    private router: Router,
+    private storageService: StorageService,
+  ){
+     //this.translate.setDefaultLang('en');
+  }
+
+  ngOnInit(): void {
+    const language = this.storageService.getItem();
+    if (language) {
+      console.log(language);
+      this.translate.use(language);
+    }
+  }
 
   sendCode : SendCode = {
     email: ''

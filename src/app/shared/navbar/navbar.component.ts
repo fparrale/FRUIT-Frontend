@@ -9,11 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { filter } from 'rxjs';
 import { ROUTE_NAMES } from '../../../helpers/routes_names';
 import { AuthService } from '../../auth/services/AuthService.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, MatToolbarModule, MatIconModule, HttpClientModule],
+  imports: [RouterModule, MatToolbarModule, MatIconModule, HttpClientModule, TranslateModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -26,10 +28,15 @@ export class NavbarComponent {
   @Output() toggleSidenav = new EventEmitter<void>();
 
   constructor(
+    private translate: TranslateService,
     private authService: AuthService,
     private questionService: QuestionsService, 
-    private router: Router
-  ) {}
+    private router: Router,
+    private storageService: StorageService
+  ) {
+    
+
+  }
 
   toggleMenu() {
     this.toggleSidenav.emit();
@@ -40,6 +47,11 @@ export class NavbarComponent {
   }
 
   ngOnInit(): void {
+    const language = this.storageService.getItem();
+    if (language) {
+      this.translate.setDefaultLang(language);
+    }
+    //this.translate.setDefaultLang('en');
     this.getUserAuthenticaded();
      // Detectar el cambio de rutas
      this.router.events.subscribe((event) => {

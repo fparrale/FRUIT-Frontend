@@ -8,8 +8,8 @@
         (click)="importQuestions()"
       >
         <div class="text-blue-600 text-4xl mb-4">📝</div>
-        <h5 class="text-lg font-bold mb-2">Importar Preguntas</h5>
-        <p class="text-gray-600">Sube o importa tus conjuntos de preguntas</p>
+        <h5 class="text-lg font-bold mb-2">{{'HOME.IMPORT_QUESTION' | translate }}</h5>
+        <p class="text-gray-600">{{'HOME.DESCRIPTION_IMPORT_QUESTION' | translate }}</p>
       </div>
 
       <div *ngIf="canShowItemTeacher()"
@@ -17,8 +17,8 @@
         (click)="createGame()"
       >
         <div class="text-green-600 text-4xl mb-4">🎮</div>
-        <h5 class="text-lg font-bold mb-2">Crear Sala de Juegos</h5>
-        <p class="text-gray-600">Inicia una nueva sesión de juego</p>
+        <h5 class="text-lg font-bold mb-2">{{'HOME.CREATE_GAME_ROOM' | translate }}</h5>
+        <p class="text-gray-600">{{'HOME.DESCRIPTION_GAME_ROOM' | translate }}</p>
       </div>
 
       <div *ngIf="canShowItemStudent()"
@@ -26,8 +26,8 @@
         (click)="findGame('find')"
       >
         <div class="text-yellow-600 text-4xl mb-4">🔍</div>
-        <h5 class="text-lg font-bold mb-2">Encuentra la Sala de Juegos</h5>
-        <p class="text-gray-600">Únete a una sesión de juego existente</p>
+        <h5 class="text-lg font-bold mb-2">{{'HOME.FIND_GAME_ROOM' | translate }}</h5>
+        <p class="text-gray-600">{{'HOME.DESCRIPTION_FIND_GAME_ROOM' | translate }}</p>
       </div>
 
       <div *ngIf="canShowItemStudent()"
@@ -35,8 +35,8 @@
         (click)="findGame('practice')"
       >
         <div class="text-yellow-600 text-4xl mb-4">🪄</div>
-        <h5 class="text-lg font-bold mb-2">Encuentra la Sala de Juegos de Practica</h5>
-        <p class="text-gray-600">Únete a una sesión de juego existente</p>
+        <h5 class="text-lg font-bold mb-2">{{'HOME.FIND_PRACTICE_GAME_ROOM' | translate }}</h5>
+        <p class="text-gray-600">{{'HOME.DESCRIPTION_FIND_PRACTICE_GAME_ROOM' | translate }}</p>
       </div>
     </div>
   </main>

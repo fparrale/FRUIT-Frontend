@@ -6,11 +6,12 @@ import { GameRoomsService } from '../services/game-rooms.service';
 import { LoadingService } from '../../shared/loading.service';
 import { AlertService } from '../../shared/alert.service';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-game-room',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './create-game-room.component.html',
   styleUrl: './create-game-room.component.css',
 })
@@ -51,7 +52,7 @@ export default class CreateGameRoomComponent implements OnInit {
 
   listRnf: Array<createRnfGameRoomService> = [];
 
-  showModal: boolean = false;
+  showModal: boolean = true;
 
   editIndex: number | null = null;
 

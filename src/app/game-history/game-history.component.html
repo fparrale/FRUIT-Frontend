@@ -6,9 +6,9 @@
           <thead class="bg-[#0D92F4] text-white">
             <tr>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Id</th>
-              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Codigo</th>
-              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Puntaje</th>
-              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Duración</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.CODE' | translate }}</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.SCORE' | translate }}</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.DURATION' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +36,7 @@
           [ngClass]="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''"
           (click)="prevPage()"
         >
-          &laquo; Anterior
+          &laquo; {{ 'BUTTON_NAVIGATION_TABLE.PREVIOUS' | translate }}
         </button>
       
         <!-- Botones de páginas -->
@@ -58,7 +58,7 @@
           [ngClass]="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''"
           (click)="nextPage()"
         >
-          Siguiente &raquo;
+        {{ 'BUTTON_NAVIGATION_TABLE.NEXT' | translate }}&raquo;
         </button>
       </div>
       

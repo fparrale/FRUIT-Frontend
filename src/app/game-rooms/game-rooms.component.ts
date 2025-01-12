@@ -8,13 +8,15 @@ import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import * as Papa from 'papaparse';
 import { createRnfGameRoomService } from './interfaces/game-rooms';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-game-rooms',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   templateUrl: './game-rooms.component.html',
   styleUrl: './game-rooms.component.css'

@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/AuthService.service';
@@ -7,6 +13,7 @@ import { Credentials } from '../interfaces/Credentials';
 import { LoadingService } from '../../shared/loading.service';
 import { AlertService } from '../../shared/alert.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { StorageService } from '../../shared/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +23,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './login.component.css',
   providers: [AuthService],
 })
-export default class LoginComponent {
+export default class LoginComponent implements OnInit{
   credentials: Credentials = {
     email: '',
     password: '',
@@ -24,21 +31,44 @@ export default class LoginComponent {
 
   isLanguageMenuOpen = false;
 
-  constructor(private alertService: AlertService, private loadingService: LoadingService, 
-              private authService: AuthService, private router: Router,
-              private translate: TranslateService, private el: ElementRef, private renderer: Renderer2) {
-                this.translate.setDefaultLang('en');
-              }
-    
+  languageUserSelect = 'es';
+
+  constructor(
+    private alertService: AlertService,
+    private loadingService: LoadingService,
+    private authService: AuthService,
+    private router: Router,
+    private translate: TranslateService,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private storageService: StorageService
+  ) {
+    //this.translate.setDefaultLang(this.languageUserSelect)
+    //this.translate.setDefaultLang(this.languageUserSelect);
+    // const language = this.getLanguageUserStorage();
+    // this.translate.setDefaultLang(language); // Configura el idioma predeterminado de inmediato
+    // this.languageUserSelect = language; // Asegúrate de sincronizar esta variable con el idioma
+  }
+
+  ngOnInit(): void {
+    const language = this.storageService.getItem() || 'es';
+    this.languageUserSelect = language;
+    this.translate.setDefaultLang(language);
+  }
+
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent): void {
-    console.log('click');
+    // console.log('click');
     const clickedInside = this.el.nativeElement.contains(event.target);
     const clickedElement = event.target as HTMLElement;
-    console.log(clickedElement)
+    // console.log(clickedElement);
     const clickedElementId = clickedElement.id;
-    console.log('ID del elemento clickeado:', clickedElementId);
-    if (clickedElementId !== "language-menu-svg" && clickedElementId !== "language-menu-button" && clickedElementId !== "language-menu-path") {
+    // console.log('ID del elemento clickeado:', clickedElementId);
+    if (
+      clickedElementId !== 'language-menu-svg' &&
+      clickedElementId !== 'language-menu-button' &&
+      clickedElementId !== 'language-menu-path'
+    ) {
       this.closeToggleLanguageMenu();
     }
   }
@@ -46,7 +76,7 @@ export default class LoginComponent {
   onSubmit(): void {
     this.loadingService.showLoading();
     this.authService.login(this.credentials).subscribe({
-      next: () =>{
+      next: () => {
         this.loadingService.hideLoading();
         this.router.navigate(['/home']);
       },
@@ -76,11 +106,17 @@ export default class LoginComponent {
 
   closeToggleLanguageMenu(): void {
     this.isLanguageMenuOpen = false;
-  }	
+  }
 
   changeLanguage(lang: string): void {
+    //console.log('Cambiando idioma a:', lang);
     this.translate.use(lang); // Cambia el idioma
+    this.storageService.setItem(lang); // Guarda el idioma en el localStorage
+    //this.setLanguageUserStorage(lang); // Guarda el idioma en el localStorage
     this.isLanguageMenuOpen = false; // Cierra el menú
   }
-  
+
+  navigationToPage(route: string): void {
+    this.router.navigate([route]);
+  }
 }

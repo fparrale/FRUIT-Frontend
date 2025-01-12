@@ -15,11 +15,12 @@ import { GameDataParamsService } from '../../game/params/game-data-params.servic
 import { AlertService } from '../../shared/alert.service';
 import { BodyResultsQuestions } from '../interfaces/BodyResultsQuestions';
 import { LoadingService } from '../../shared/loading.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [DragDropModule, CommonModule, MatButtonModule],
+  imports: [DragDropModule, CommonModule, MatButtonModule, TranslateModule],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
   providers: [QuestionsService],

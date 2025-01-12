@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/services/AuthService.service';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-question',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, TranslateModule],
   templateUrl: './home-question.component.html',
   styleUrl: './home-question.component.css'
 })
 export default class HomeQuestionComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor( private translate: TranslateService, private router: Router, private authService: AuthService) {}
   userRoleId: string = '';
 
   ngOnInit(): void {

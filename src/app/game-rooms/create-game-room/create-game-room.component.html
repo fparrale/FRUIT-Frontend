@@ -1,24 +1,22 @@
 <div *ngIf="showModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 px-4">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl max-h-full overflow-y-auto">
-        <h6 class="text-xl font-bold text-gray-800 mb-4"> {{ editIndex === null ? 'Agregar' : 'Actualizar' }}</h6>
+        <h6 class="text-xl font-bold text-gray-800 mb-4"> {{ editIndex === null ? ('CREATE_GAME_ROOM.MODAL_EDIT_CREATE_RNF.ADD' | translate) : ('CREATE_GAME_ROOM.MODAL_EDIT_CREATE_RNF.UPDATE' | translate) }}</h6>
         <form (ngSubmit)="guardarRNF()" #rnfForm="ngForm">
 
             <div class="grid grid-cols-1 gap-4 mb-4">
                 <div>
-                    <label for="rnf" class="block text-gray-700 font-medium mb-1">Requerimiento no funcional</label>
+                    <label for="rnf" class="block text-gray-700 font-medium mb-1">{{('CREATE_GAME_ROOM.MODAL_EDIT_CREATE_RNF.NFR' | translate)}}</label>
                     <input type="text" id="rnf" name="rnf"
                         class="w-full bg-gray-50 p-3 rounded-xl outline-none border shadow-sm text-gray-700 text-sm"
                         [class.border-red-500]="rnf.invalid && rnf.touched" [(ngModel)]="newRnf.nfr" #rnf="ngModel"
                         required />
-                    <div *ngIf="rnf.invalid && rnf.touched" class="text-red-500 text-sm mt-1">El requerimiento no
-                        funcional
-                        es obligatorio.</div>
+                    <div *ngIf="rnf.invalid && rnf.touched" class="text-red-500 text-sm mt-1">{{'CREATE_GAME_ROOM.MODAL_EDIT_CREATE_RNF.ERROR.NFR_REQUIRED' | translate}}</div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label for="variable" class="block text-gray-700 font-medium mb-1">Variable Lingüística</label>
+                    <label for="variable" class="block text-gray-700 font-medium mb-1">{{ 'CREATE_GAME_ROOM.MODAL_EDIT_CREATE_RNF.LINGUISTIC_VARIABLE' | translate}}</label>
                     <input type="text" id="variable" name="variable"
                         class="w-full bg-gray-50 p-3 rounded-xl outline-none border shadow-sm text-gray-700 text-sm"
                         [class.border-red-500]="variable.invalid && variable.touched" [(ngModel)]="newRnf.variable"
