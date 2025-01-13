@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 })
 export class GameService { 
   private apiUrl = environment.apiUrl + 'questions/questionsByCode';
-  private apiUrlPractice = environment.apiUrl + 'questions/getInfoAllByCode';
+  private apiUrlPractice = environment.apiUrl + 'questions/questionInfoBycode';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
 
