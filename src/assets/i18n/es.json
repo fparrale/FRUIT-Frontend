@@ -89,7 +89,12 @@
     "CREATION_DATE": "FECHA DE CREACIÓN",
     "EXPIRATION_DATE": "FECHA DE EXPIRACIÓN",
     "STATUS": "ESTADO",
-    "ACTIONS": "ACCIONES"
+    "ACTIONS": "ACCIONES",
+    "LINGUISTIC_VARIABLE": "Variable Lingüística",
+    "LINGUISTIC_VALUE": "Valor Lingüístico",
+    "LINGUISTIC_RECOMMENDATION": "Recomendación",
+    "OTHER_LINGUISTIC_VALUES": "Otros Valores Lingüísticos",
+    "VALUES": "Valores"
   },
   "BUTTON_NAVIGATION_TABLE": {
     "NEXT": "Siguiente",
@@ -172,5 +177,43 @@
     "ASSET": "Activo",
     "IDLE": "Inactivo",
     "ELIMINATED": "Eliminar"
+  },
+  "CREATE_GAME_ROOM": {
+    "MODAL_EDIT_CREATE_RNF": {
+      "ADD": "Agregar",
+      "UPDATE": "Actualizar",
+      "BUTTON_EDIT": "Actualizar",
+      "BUTTON_CLOSE": "Cerrar",
+      "BUTTON_EDIT_MODAL": "Editar",
+      "BUTTON_ADD": "Agregar",
+      "BUTTON_ELIMINATE": "Eliminar",
+      "BUTTON_CREATE_ROOM": "Crear Sala",
+      "BUTTON_ADD_RNF": "Agregar RNF",
+      "COMPLETATION_DATE": "Fecha de Finalización: ",
+      "NFR": "Requisito no funcional",
+      "LINGUISTIC_VARIABLE": "Variable Lingüística",
+      "LINGUISTIC_VALUE": "Valor Lingüístico",
+      "LINGUISTIC_RECOMMENDATION": "Recomendación",
+      "OTHER_LINGUISTIC_VALUES": "Otros Valores Lingüísticos",
+      "WEIGHT": "Peso",
+      "FEEDBACK": "Retroalimentación",
+      "ERROR": {
+        "NFR_REQUIRED": "El requisito no funcional es obligatorio.",
+        "VARIABLE_REQUIRED": "La Variable Lingüística es obligatoria.",
+        "FEEDBACK_REQUIRED": "La retroalimentación es obligatoria.",
+        "WEIGHT_REQUIRED": "El peso es obligatorio.",
+        "LINGUISTIC_VALUE_REQUIRED": "El Valor Lingüístico es obligatorio.",
+        "RECOMMENDATION_REQUIRED": "La recomendación es obligatoria.",
+        "OTHER_LINGUISTIC_VALUES_REQUIRED": "Los otros valores lingüísticos son obligatorios."
+      }
+    }
+  },
+  "ALERT": {
+    "SUCCESS": "Mensaje de éxito",
+    "ERROR": "Mensaje de error",
+    "BUTTON_CLOSE": "Cerrar"
+  },
+  "REPORT": {
+    "GENERATE_REPORT": "Generar reporte"
   }
 }

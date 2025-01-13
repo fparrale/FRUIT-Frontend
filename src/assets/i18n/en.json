@@ -61,7 +61,7 @@
     "LOGIN": "Log in here"
   },
   "NAVBAR": {
-    "HELLO": "Hello"
+    "HELLO": "Hi"
   },
   "SIDEBAR": {
     "HOME": "Home",
@@ -89,7 +89,12 @@
     "CREATION_DATE": "CREATION DATE",
     "EXPIRATION_DATE": "EXPIRATION DATE",
     "STATUS": "STATUS",
-    "ACTIONS": "ACTIONS"
+    "ACTIONS": "ACTIONS",
+    "LINGUISTIC_VARIABLE": "Linguistic Variable",
+    "LINGUISTIC_VALUE": "Linguistic Value",
+    "LINGUISTIC_RECOMMENDATION": "Recommendation",
+    "OTHER_LINGUISTIC_VALUES": "Other Linguistic Values",
+    "VALUES": "Values"
   },
   "BUTTON_NAVIGATION_TABLE": {
     "NEXT": "Next",
@@ -177,16 +182,38 @@
     "MODAL_EDIT_CREATE_RNF": {
       "ADD": "Add",
       "UPDATE": "Update",
+      "BUTTON_EDIT": "Update",
+      "BUTTON_CLOSE": "Close",
+      "BUTTON_EDIT_MODAL": "Edit",
+      "BUTTON_ADD": "Add",
+      "BUTTON_ELIMINATE": "Eliminate",
+      "BUTTON_CREATE_ROOM": "Create Room",
+      "BUTTON_ADD_RNF": "Add RNF",
+      "COMPLETATION_DATE": "Completion Date: ",
       "NFR": "Non-functional requirement",
-      "LINGUISTIC_VARIABLE": "Linguistic Variable: ",
-      "LINGUISTIC_VALUE": "Linguistic Value: ",
-      "LINGUISTIC_RECOMMENDATION": "Linguistic Recommendation: ",
+      "LINGUISTIC_VARIABLE": "Linguistic Variable",
+      "LINGUISTIC_VALUE": "Linguistic Value",
+      "LINGUISTIC_RECOMMENDATION": "Recommendation",
       "OTHER_LINGUISTIC_VALUES": "Other Linguistic Values",
       "WEIGHT": "Weight",
       "FEEDBACK": "Feedback",
-      "ERROR":{
-        "NFR_REQUIRED": "The non-functional requirement is mandatory."
+      "ERROR": {
+        "NFR_REQUIRED": "The non-functional requirement is mandatory.",
+        "VARIABLE_REQUIRED": "The Variable Linguistic is mandatory.",
+        "FEEDBACK_REQUIRED": "The feedback is mandatory.",
+        "WEIGHT_REQUIRED": "The weight is mandatory.",
+        "LINGUISTIC_VALUE_REQUIRED": "The Linguistic Value is mandatory.",
+        "RECOMMENDATION_REQUIRED": "The recommendation is mandatory.",
+        "OTHER_LINGUISTIC_VALUES_REQUIRED": "The other linguistic values are mandatory."
       }
     }
+  },
+  "ALERT": {
+    "SUCCESS": "Success message",
+    "ERROR": "Error message",
+    "BUTTON_CLOSE": "Close"
+  },
+  "REPORT": {
+    "GENERATE_REPORT": "Generate report"
   }
 }

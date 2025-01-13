@@ -65,7 +65,7 @@ export class GameRoomsService {
       );
   }
 
-  generateReportGameRoom(game_room_id:number): Observable<any> {
+  generateReportGameRoom(game_room_id:number, language:string): Observable<any> {
     const userData = this.authService.getUserData();
 
     const headers = new HttpHeaders({
@@ -75,7 +75,7 @@ export class GameRoomsService {
     return this.http
     .post(
       this.apiUrlGenerateReportGameRoom,
-      { game_room_id },
+      { game_room_id, language },
       { headers, responseType: 'blob', observe: 'response' }
     )
     .pipe(

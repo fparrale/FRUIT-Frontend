@@ -1,4 +1,4 @@
-export const ROUTE_NAMES = {
+export const ROUTE_NAMES_ES = {
     '/home': 'Inicio',
     '/game': 'Juego',
     '/game-history': 'Historial de Juegos',
@@ -9,5 +9,18 @@ export const ROUTE_NAMES = {
     '/report': 'Reporte',
     '/create-game-room': 'Crear Sala de Juego',
     '/practice-game': 'Sala de practica'
+  };
+  
+  export const ROUTE_NAMES_EN = {
+    '/home': 'Home',
+    '/game': 'Game',
+    '/game-history': 'Game History',
+    '/quiz-game': 'Quiz Game',
+    '/results': 'Results',
+    '/users': 'Users',
+    '/game-rooms': 'Game Rooms',
+    '/report': 'Report',
+    '/create-game-room': 'Create Game Room',
+    '/practice-game': 'Practice Room'
   };
   
