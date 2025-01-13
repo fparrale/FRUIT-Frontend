@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 
 import { AuthService } from '../../auth/services/AuthService.service';
 import { GameDataParamsService } from '../../game/params/game-data-params.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +19,8 @@ import { GameDataParamsService } from '../../game/params/game-data-params.servic
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    TranslateModule
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
@@ -34,6 +36,7 @@ export class SidebarComponent implements OnInit {
   userRoleId: string = '';
 
   constructor(
+    private translate: TranslateService,
     private observer: BreakpointObserver,
     private authService: AuthService,
     private gameDataParamsService: GameDataParamsService,

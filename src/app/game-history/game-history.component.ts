@@ -4,11 +4,12 @@ import { AlertService } from '../shared/alert.service';
 import { LoadingService } from '../shared/loading.service';
 import { Router } from '@angular/router';
 import { GameHistoryService } from './services/game-history.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-game-history',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './game-history.component.html',
   styleUrl: './game-history.component.css'
 })

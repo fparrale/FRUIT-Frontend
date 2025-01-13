@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {CreateRnfList, GameRoomRnf, createRnfGameRoomService} from '../interfaces/game-rooms';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+  CreateRnfList,
+  GameRoomRnf,
+  createRnfGameRoomService,
+} from '../interfaces/game-rooms';
 import { GameRoomsService } from '../services/game-rooms.service';
 import { LoadingService } from '../../shared/loading.service';
 import { AlertService } from '../../shared/alert.service';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { StorageService } from '../../shared/storage.service';
 
 @Component({
   selector: 'app-create-game-room',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './create-game-room.component.html',
   styleUrl: './create-game-room.component.css',
 })
@@ -19,7 +25,8 @@ export default class CreateGameRoomComponent implements OnInit {
     private gameRoomsService: GameRoomsService,
     private loadingService: LoadingService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService
   ) {}
 
   today: string = '';
@@ -28,8 +35,12 @@ export default class CreateGameRoomComponent implements OnInit {
   selectedHour: string | null = null;
   selectedMinute: string | null = null;
 
-  hours: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
-  minutes: string[] = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
+  hours: string[] = Array.from({ length: 24 }, (_, i) =>
+    i.toString().padStart(2, '0')
+  );
+  minutes: string[] = Array.from({ length: 60 }, (_, i) =>
+    i.toString().padStart(2, '0')
+  );
 
   // durations: number[] = [5, 10, 15, 20, 30, 45, 60];
   // duration: number = 15;
@@ -55,7 +66,7 @@ export default class CreateGameRoomComponent implements OnInit {
 
   editIndex: number | null = null;
 
-  fullDateTime : string = '';
+  fullDateTime: string = '';
 
   ngOnInit() {
     const currentDate = new Date();
@@ -100,22 +111,28 @@ export default class CreateGameRoomComponent implements OnInit {
 
   guardarRNF() {
     this.newRnf.validar = `${this.newRnf.weightVarible}/${this.newRnf.weightValue}/${this.newRnf.weightRecomend}`;
-  
-    const numbers = this.newRnf.validar.split('/').map((num) => parseFloat(num.trim()));
+
+    const numbers = this.newRnf.validar
+      .split('/')
+      .map((num) => parseFloat(num.trim()));
     const total = numbers.reduce((sum, num) => sum + num, 0);
-  
+
     if (total > 1) {
-      this.alertService.showAlert('La suma de los pesos debe ser igual a 1', true);
+      this.alertService.showAlert(
+        'La suma de los pesos debe ser igual a 1',
+        true
+      );
     } else {
-      const { weightVarible, weightValue, weightRecomend, ...rnfToSave } = this.newRnf;
-  
+      const { weightVarible, weightValue, weightRecomend, ...rnfToSave } =
+        this.newRnf;
+
       if (this.editIndex !== null) {
         this.listRnf[this.editIndex] = rnfToSave;
         this.editIndex = null;
       } else {
         this.listRnf.push(rnfToSave);
       }
-  
+
       this.newRnf = {
         nfr: '',
         variable: '',
@@ -130,7 +147,7 @@ export default class CreateGameRoomComponent implements OnInit {
         weightValue: '',
         weightRecomend: '',
       };
-  
+
       this.showModal = false;
     }
   }
@@ -144,17 +161,20 @@ export default class CreateGameRoomComponent implements OnInit {
   }
 
   createGameRoomService(): void {
-    if(this.listRnf.length === 0){
-      this.alertService.showAlert('No se han agregado requerimientos no funcionales', true);
-    }else{
+    if (this.listRnf.length === 0) {
+      if (this.storageService.getItem() === 'en') {
+        this.alertService.showAlert('No non-functional requirements have been added', true );
+      } else {
+        this.alertService.showAlert('No se han agregado requerimientos no funcionales', true );
+      }
+    } else {
+      if (!this.submitDateTime()) return;
 
-      if(!this.submitDateTime()) return;
-
-      const body : GameRoomRnf = {
+      const body: GameRoomRnf = {
         expiration_date: this.fullDateTime,
-        questions: this.listRnf 
+        questions: this.listRnf,
       };
-  
+
       this.loadingService.showLoading();
       this.gameRoomsService.createGameRoom(body).subscribe({
         next: (response) => {
@@ -210,11 +230,17 @@ export default class CreateGameRoomComponent implements OnInit {
     };
   }
 
-  submitDateTime() : boolean {
+  submitDateTime(): boolean {
     if (this.selectedDate && this.selectedHour && this.selectedMinute) {
-      this.fullDateTime = `${this.selectedDate} ${this.selectedHour}:${this.selectedMinute}:${new Date().getSeconds()}`;
+      this.fullDateTime = `${this.selectedDate} ${this.selectedHour}:${
+        this.selectedMinute
+      }:${new Date().getSeconds()}`;
       return true;
     } else {
+      if (this.storageService.getItem() === 'en') {
+        this.alertService.showAlert('The end date is mandatory.', true);
+        return false;
+      } else
       this.alertService.showAlert('La fecha de finalizacion es obligatoria.', true);
       return false;
     }

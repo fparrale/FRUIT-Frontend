@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../alert.service';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-alert',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   template: `
     <div
       *ngIf="alert"
@@ -50,13 +51,13 @@ import { CommonModule } from '@angular/common';
             *ngIf="alert.type === true"
             class="text-lg font-bold text-gray-800 mb-4"
           >
-            Mensaje de error
+          {{ 'ALERT.ERROR' | translate }}
           </h6>
           <h6
             *ngIf="alert.type === false"
             class="text-lg font-bold text-gray-800 mb-4"
           >
-            Mensaje de éxito
+            {{ 'ALERT.SUCCESS' | translate }}
           </h6>
           <p [innerHTML]="alert.message" class="text-center text-gray-600 text-md mb-8">
            
@@ -69,7 +70,7 @@ import { CommonModule } from '@angular/common';
             class="px-4 py-2 text-white rounded-lg mt-4"
             (click)="closeAlert()"
           >
-            Cerrar
+            {{ 'ALERT.BUTTON_CLOSE' | translate }}
           </button>
         </div>
       </div>

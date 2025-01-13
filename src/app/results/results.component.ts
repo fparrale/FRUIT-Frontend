@@ -3,11 +3,12 @@ import { GameDataParamsService } from '../game/params/game-data-params.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ResultsQuestionsResponse } from './interfaces/ResultsQuestionsResponse';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './results.component.html',
   styleUrl: './results.component.css'
 })

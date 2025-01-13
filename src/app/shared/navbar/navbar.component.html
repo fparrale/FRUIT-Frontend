@@ -20,14 +20,14 @@
     <div class="flex items-center gap-4">
       <!-- Saludo al usuario -->
       <div class="hidden sm:flex items-center gap-2">
-        <span class="text-sm text-gray-600 font-medium">Hola,</span>
+        <span class="text-sm text-gray-600 font-medium">{{'NAVBAR.HELLO' | translate }},</span>
         <span class="text-sm font-semibold text-gray-900">{{ fullName }} - {{ rolName }}</span>
       </div>
   
       <!-- Avatar del usuario -->
       <div class="w-10 h-10">
         <img
-          src="{{'https://via.placeholder.com/40' }}"
+          src="{{getPhotoUser()}}"
           alt="Avatar del usuario"
           class="w-full h-full rounded-full object-cover border border-gray-300"
         />

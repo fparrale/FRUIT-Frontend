@@ -7,13 +7,13 @@
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
                             Id</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Codigo</th>
+                            {{'TABLE.CODE' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Fecha de Creación</th>
+                            {{'TABLE.CREATION_DATE' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Fecha de Expiración</th>
+                            {{'TABLE.EXPIRATION_DATE' | translate}}</th>
                         <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">
-                            Acciones</th>
+                            {{'TABLE.ACTIONS' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                                 <button
                                 (click)="onGenerateReportGameRoom(gameRooms)"
                                     class="px-2 py-1 text-xs font-medium text-white bg-[#28A745] rounded hover:bg-green-700 focus:outline-none">
-                                    Generar Reporte
+                                    {{'REPORT.GENERATE_REPORT' | translate}}
                                 </button>
                             </div>
                         </td>
@@ -47,7 +47,7 @@
             [disabled]="currentPage === 1"
             [ngClass]="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''"
             (click)="prevPage()">
-            &laquo; Anterior
+            &laquo; {{ 'BUTTON_NAVIGATION_TABLE.PREVIOUS' | translate }}
         </button>
         <button *ngFor="let page of [].constructor(totalPages); let i = index"
             class="px-4 py-2 text-sm font-medium border rounded-md transition-colors duration-300"
@@ -62,7 +62,7 @@
             [disabled]="currentPage === totalPages"
             [ngClass]="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''" 
             (click)="nextPage()">
-            Siguiente &raquo;
+            {{ 'BUTTON_NAVIGATION_TABLE.NEXT' | translate }} &raquo;
         </button>
     </div>
 </div>

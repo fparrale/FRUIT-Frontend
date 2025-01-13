@@ -4,11 +4,13 @@ import { AlertService } from '../shared/alert.service';
 import { LoadingService } from '../shared/loading.service';
 import { CommonModule } from '@angular/common';
 import { json } from 'node:stream/consumers';
+import { TranslateModule } from '@ngx-translate/core';
+import { StorageService } from '../shared/storage.service';
 
 @Component({
   selector: 'app-report',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './report.component.html',
   styleUrl: './report.component.css'
 })
@@ -22,7 +24,8 @@ export default class ReportComponent implements OnInit {
   constructor(
     private gameRoomsService: GameRoomsService,
     private alertService: AlertService, 
-    private loadingService: LoadingService, 
+    private loadingService: LoadingService,
+    private serviceStorage: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +49,7 @@ export default class ReportComponent implements OnInit {
 
   onGenerateReportGameRoom(gameRooms: any) {
     this.loadingService.showLoading();
-    this.gameRoomsService.generateReportGameRoom(gameRooms.id).subscribe({
+    this.gameRoomsService.generateReportGameRoom(gameRooms.id, this.serviceStorage.getItem() || 'es').subscribe({
       next: (response) => {
         const contentDisposition = response.headers.get('Content-Disposition');
         let fileName = 'reporte.pdf';
