@@ -1,0 +1,1 @@
+import{Eb as a,Nb as p,ja as n,kb as o,lb as r}from"./chunk-EU2SIFBO.js";var t=class s{static \u0275fac=function(e){return new(e||s)};static \u0275cmp=n({type:s,selectors:[["app-users"]],standalone:!0,features:[p],decls:2,vars:0,template:function(e,m){e&1&&(o(0,"p"),a(1,"users works!"),r())}})};export{t as default};
