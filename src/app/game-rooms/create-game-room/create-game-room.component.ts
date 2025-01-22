@@ -12,6 +12,8 @@ import { AlertService } from '../../shared/alert.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { StorageService } from '../../shared/storage.service';
+import Papa from 'papaparse';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-create-game-room',
@@ -246,4 +248,78 @@ export default class CreateGameRoomComponent implements OnInit {
       return false;
     }
   }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+  if (input.files && input.files.length > 0) {
+    const selectedFile = input.files[0];
+
+    const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+    if (!allowedTypes.includes(selectedFile.type)) {
+      this.alertService.showAlert('Solo se permiten archivos Excel (.xls, .xlsx)', true);
+      input.value = '';
+      return;
+    }
+    
+    this.loadingService.showLoading();
+    this.transformExcelToCsv(selectedFile)
+      .then((csv) => {
+        this.parseCsvToArray(csv);
+        this.loadingService.hideLoading();
+        input.value = '';
+      })
+      .catch((error) => {
+        input.value = '';
+        this.loadingService.hideLoading();
+        this.alertService.showAlert('Error al subir el archivo', error);
+      });
+    }
+  }
+
+  transformExcelToCsv(file: File): Promise<string> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const data = new Uint8Array(e.target.result);
+          const arr = new Array();
+          for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+          const bstr = arr.join("");
+          const workbook = XLSX.read(bstr, { type: "binary" });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const csv = XLSX.utils.sheet_to_csv(worksheet);
+          resolve(csv);
+        };
+        reader.onerror = (error) => reject(error);
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    parseCsvToArray(csv: string): void {
+      Papa.parse(csv, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          console.log('Raw data:', result.data);
+          this.listRnf = result.data.map((item: any) => ({
+            nfr: item.RNF || '',
+            variable: item.linguistic_variable || '',
+            feedback1: item.feedback_linguistic_variable || '',
+            value: item.linguistic_value || '',
+            feedback2: item.feedback_linguistic_value || '',
+            recomend: item.recommended_linguistic_value || '',
+            other_recommended_values: item.other_linguistic_values || '',
+            feedback3: item.feedback_recommended_linguistic_value || '',
+            validar: item.weights || ''
+          }));
+          this.loadingService.hideLoading();
+          console.log('Parsed data:', this.listRnf);
+        },
+        error: (error: any) => {
+          this.alertService.showAlert('Error al procesar el archivo CSV', true);
+          console.error('Error parsing CSV:', error);
+        }
+      });
+    }
 }

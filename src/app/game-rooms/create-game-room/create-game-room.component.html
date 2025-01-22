@@ -165,6 +165,18 @@
                 <option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</option>
             </select>
         </div>
+        <div class="flex items-center gap-2">
+            <label for="fileInput" class="text-sm font-medium text-gray-700">
+              {{ 'GAME_ROOM.UPLOAD_QUESTION' | translate }}
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              (change)="onFileSelected($event)"
+              accept=".xlsx, .xls"
+              class="w-auto px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300 cursor-pointer"
+            />
+          </div>
         <!-- <div class="flex items-center gap-4">
             <label class="text-gray-700 font-medium whitespace-nowrap">Duración (minutos):</label>
             <select [(ngModel)]="duration"

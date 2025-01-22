@@ -140,7 +140,7 @@ export default class GameRoomsComponent implements OnInit{
             console.error('Error parsing CSV:', error);
         }
     });
-}
+  }
 
 
   onFileSelected(event: Event): void {
@@ -168,21 +168,7 @@ export default class GameRoomsComponent implements OnInit{
         this.loadingService.hideLoading();
         this.alertService.showAlert('Error al subir el archivo', error);
       });
-    // this.gameRoomsService.uploadExcel(selectedFile).subscribe({
-    //   next: (response) => {
-    //     this.loadingService.hideLoading();
-    //     this.alertService.showAlert(response.message, false);
-    //     this.getGameRooms();
-    //     input.value = '';
-    //   },
-    //   error: (error) => {
-    //     this.loadingService.hideLoading();
-    //     input.value = '';
-    //     this.alertService.showAlert('Error al subir el archivo', true);
-    //     console.error('Error al subir archivo:', error);
-    //   },
-    // });
-  }
+    }
   }
 
   // onUpload(): void {
