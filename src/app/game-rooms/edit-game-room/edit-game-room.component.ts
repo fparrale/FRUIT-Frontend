@@ -38,6 +38,17 @@ export default class EditGameRoomComponent implements OnInit {
     listRnf: Array<createRnfGameRoomService> = [];
     indexQuestionId: number = 0;
 
+    // Fecha y hora
+  selectedDate: string = ''; // Fecha seleccionada (yyyy-MM-dd)
+  selectedHour: string = '00'; // Hora seleccionada (hh)
+  selectedMinute: string = '00'; // Minutos seleccionados (mm)
+  today: string = new Date().toISOString().split('T')[0]; // Fecha mínima para el selector
+
+  // Opciones para horas y minutos
+  hours: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
+  minutes: string[] = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
+
+
 
 
   constructor(private router: Router, private loadingService: LoadingService,
@@ -52,6 +63,12 @@ export default class EditGameRoomComponent implements OnInit {
   ngOnInit() {
     if (!this.questions || !this.gameRoom) {
       this.router.navigate(['/game-rooms']); // Ajusta la ruta según tu necesidad
+    }else{
+      const [date, time] = this.gameRoom["expiration_date"].split(' ');
+      const [hour, minute] = time.split(':');
+      this.selectedDate = date;
+      this.selectedHour = hour;
+      this.selectedMinute = minute;
     }
   }
 
@@ -184,6 +201,34 @@ export default class EditGameRoomComponent implements OnInit {
       this.showModal = false;
       this.listRnf = [];
     }
+  }
+
+  updateExpirationDate() {
+    if (!this.selectedDate || !this.selectedHour || !this.selectedMinute) {
+      this.alertService.showAlert('Por favor, completa la fecha, hora y minutos.', true);
+      return;
+    }
+  
+    const newExpirationDate = `${this.selectedDate} ${this.selectedHour}:${this.selectedMinute}:00`;
+  
+    const body = {
+      gameRoomId: this.gameRoom.id,
+      expirationDate: newExpirationDate,
+    };
+  
+    this.loadingService.showLoading();
+  
+    this.gameRoomsService.updateExpirationDate(body).subscribe({
+      next: (response) => {
+        this.loadingService.hideLoading();
+        this.alertService.showAlert(response.message, false);
+        this.gameRoom.expiration_date = newExpirationDate;
+      },
+      error: (error) => {
+        this.loadingService.hideLoading();
+        this.alertService.showAlert(error.message, true);
+      }
+    });
   }
 
 }

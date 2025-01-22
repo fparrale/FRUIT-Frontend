@@ -96,8 +96,10 @@ export class NavbarComponent {
     }else{
       if(this.authService.getUserData()?.user.role.name === 'Estudiante') {
         this.rolName = 'Student';
-      }else{
+      }else if(this.authService.getUserData()?.user.role.name === 'Docente'){
         this.rolName = 'Teacher';
+      }else{
+        this.rolName = 'Administrator';
       }
     }
   }

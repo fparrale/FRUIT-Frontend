@@ -215,5 +215,8 @@
   },
   "REPORT": {
     "GENERATE_REPORT": "Generar reporte"
+  },
+  "EDIT_GAME_ROOM":{
+    "DATE_EXPIRATION_BUTTON": "Cambiar fecha de expiración"
   }
 }

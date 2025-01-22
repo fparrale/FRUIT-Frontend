@@ -138,7 +138,45 @@
         </form>
     </div>
 </div>
+<div class="py-5">
+<div class="flex flex-wrap gap-6 mb-6 items-center">
+   
 
+    <div class="flex flex-wrap gap-2 items-center">
+        <!-- Fecha -->
+        <label class="text-gray-700 font-medium whitespace-nowrap"> {{'CREATE_GAME_ROOM.MODAL_EDIT_CREATE_RNF.COMPLETATION_DATE' | translate}} </label>
+        <input type="date" id="expiration_date" [min]="today" [(ngModel)]="selectedDate"
+          class="w-auto bg-gray-50 p-3 rounded-xl outline-none border shadow-sm text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D92F4] focus:border-transparent" />
+      
+        <!-- Hora -->
+        <select [(ngModel)]="selectedHour"
+          class="w-auto bg-gray-50 p-3 rounded-xl outline-none border shadow-sm text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D92F4] focus:border-transparent">
+          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+        </select>
+      
+        <span class="text-gray-700 font-medium">:</span>
+      
+        <!-- Minutos -->
+        <select [(ngModel)]="selectedMinute"
+          class="w-auto bg-gray-50 p-3 rounded-xl outline-none border shadow-sm text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D92F4] focus:border-transparent">
+          <option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</option>
+        </select>
+      
+        <!-- Botón -->
+        <button (click)="updateExpirationDate()"
+          class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg shadow-md w-full sm:w-auto sm:mt-0 mt-4">
+            {{'EDIT_GAME_ROOM.DATE_EXPIRATION_BUTTON' | translate}}
+        </button>
+      </div>
+      
+    <!-- <div class="flex items-center gap-4">
+        <label class="text-gray-700 font-medium whitespace-nowrap">Duración (minutos):</label>
+        <select [(ngModel)]="duration"
+            class="w-full bg-gray-50 p-3 rounded-xl outline-none border shadow-sm text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D92F4] focus:border-transparent">
+            <option *ngFor="let time of durations" [value]="time">{{ time }} min.</option>
+        </select>
+    </div> -->
+</div>
 
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
@@ -184,4 +222,5 @@
             </table>
         </div>
     </div>
+</div>
 <!-- </div> -->

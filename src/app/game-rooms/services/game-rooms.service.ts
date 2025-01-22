@@ -17,6 +17,7 @@ export class GameRoomsService {
   private apiurlUploadExcel = environment.apiUrl + 'question/UploadQuestion';
   private apiUrlGenerateReportGameRoom = environment.apiUrl + 'report/generate-report-teacher-game-room';
   private apiUrlCreateGameRoom = environment.apiUrl + 'game/create-room-game-questions';
+  private apiurlEditGameRoom = environment.apiUrl + 'game/edit-game-room';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -218,6 +219,30 @@ export class GameRoomsService {
 
     return this.http
       .post<any>(this.apiUrlGameRoomsQuestionEdit, body,{ headers })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(
+            () =>
+              new Error(
+                error.error.message || 'Ocurrio un error intentalo mas tarde'
+              )
+          );
+        })
+      );
+  }
+
+  updateExpirationDate(body: any): Observable<any> {
+    const userData = this.authService.getUserData();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${userData?.access_token}`,
+    });
+
+    return this.http
+      .post<any>(this.apiurlEditGameRoom, body ,{ headers })
       .pipe(
         tap((response) => {
           return response;
