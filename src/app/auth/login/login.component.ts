@@ -41,7 +41,7 @@ export default class LoginComponent implements OnInit{
     private translate: TranslateService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {
     //this.translate.setDefaultLang(this.languageUserSelect)
     //this.translate.setDefaultLang(this.languageUserSelect);
@@ -75,7 +75,7 @@ export default class LoginComponent implements OnInit{
 
   onSubmit(): void {
     this.loadingService.showLoading();
-    this.authService.login(this.credentials).subscribe({
+    this.authService.login(this.credentials, this.storageService.getItem() || 'es').subscribe({
       next: () => {
         this.loadingService.hideLoading();
         this.router.navigate(['/home']);

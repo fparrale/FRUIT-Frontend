@@ -28,4 +28,5 @@ export interface createRnfGameRoomService {
 export interface GameRoomRnf {
   expiration_date: string;
   questions: createRnfGameRoomService[];
+  language: string;
 }

@@ -75,14 +75,16 @@ export default class GameComponent implements OnInit{
           },
         });
       } else {
-        this.gameService.submitGameCode(this.gameCode).subscribe({
+        this.gameService.submitGameCode(this.gameCode, this.storageService.getItem() || 'es').subscribe({
           next: (response) => {
             this.loadingService.hideLoading();
             const gameData = response.questions;
             if (!gameData || gameData.length === 0) {
-              this.alertService.showAlert(
-                'No se encontraron preguntas para el juego, por favor comunicate con tu docente.'
-              );
+              if(this.storageService.getItem() === 'es'){
+                this.alertService.showAlert('No se encontraron preguntas para el juego, por favor comunicate con tu docente.');
+              }else{
+                this.alertService.showAlert('No questions found for the game, please contact your teacher for more information.');  
+              }
               return;
             } else {
               this.gameDataParamsService.setGameDataLocalStorage(gameData);
@@ -104,10 +106,11 @@ export default class GameComponent implements OnInit{
         });
       }
     } else {
-      this.alertService.showAlert(
-        'El código del juego no puede estar vacío.',
-        true
-      );
+      if(this.storageService.getItem() === 'es'){
+        this.alertService.showAlert('El código del juego no puede estar vacío.', true);
+      }else{
+        this.alertService.showAlert('The game code cannot be empty.', true);
+      }
     }
   }
 }

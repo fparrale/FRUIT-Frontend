@@ -10,6 +10,7 @@ import * as Papa from 'papaparse';
 import { createRnfGameRoomService } from './interfaces/game-rooms';
 import { TranslateModule } from '@ngx-translate/core';
 import { Questions } from '../questions/interfaces/Questions';
+import { StorageService } from '../shared/storage.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export default class GameRoomsComponent implements OnInit{
     private gameRoomsService: GameRoomsService,
     private alertService: AlertService, 
     private loadingService: LoadingService, 
-    private router : Router
+    private router : Router,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export default class GameRoomsComponent implements OnInit{
       status = true;
     }
     this.loadingService.showLoading();
-    this.gameRoomsService.deleteGameRoom(gameRooms.id, status).subscribe({
+    this.gameRoomsService.deleteGameRoom(gameRooms.id, status, this.storageService.getItem() || 'es').subscribe({
       next: (response) => {
         this.loadingService.hideLoading();
         this.alertService.showAlert(response.message, false);

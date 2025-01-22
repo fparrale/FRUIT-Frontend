@@ -53,7 +53,7 @@ export default class ForgetPasswordComponent implements OnInit{
 
   onSubmitSendCode() : void {
     this.loadingService.showLoading();
-    this.authService.passwordSendCode(this.sendCode).subscribe({
+    this.authService.passwordSendCode(this.sendCode, this.storageService.getItem() || 'es').subscribe({
       next: (response) =>{
         this.loadingService.hideLoading();
         this.alertService.showAlert(response.message, false);
@@ -69,7 +69,7 @@ export default class ForgetPasswordComponent implements OnInit{
 
   onSubmitResetPassword(): void {
     this.loadingService.showLoading();
-    this.authService.passwordReset(this.passwordReset).subscribe({
+    this.authService.passwordReset(this.passwordReset, this.storageService.getItem() || 'es').subscribe({
       next: (response) =>{
         this.loadingService.hideLoading();
         this.alertService.showAlert(response.message, false);

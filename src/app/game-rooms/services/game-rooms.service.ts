@@ -93,7 +93,7 @@ export class GameRoomsService {
       );;
   }
 
-  deleteGameRoom(game_room_id:number,status:boolean): Observable<any> {
+  deleteGameRoom(game_room_id:number,status:boolean, language: string): Observable<any> {
     const userData = this.authService.getUserData();
 
     const headers = new HttpHeaders({
@@ -101,7 +101,7 @@ export class GameRoomsService {
     });
 
     return this.http
-      .post<any>(this.apiurlDeleteGameRoom, {game_room_id, status},{ headers })
+      .post<any>(this.apiurlDeleteGameRoom, {game_room_id, status, language:language},{ headers })
       .pipe(
         tap((response) => {
           return response;

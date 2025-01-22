@@ -13,7 +13,7 @@ export class GameService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
 
-  submitGameCode(gameCode: string): Observable<any> {
+  submitGameCode(gameCode: string, language: string): Observable<any> {
     const userData = this.authService.getUserData();
 
     const headers = new HttpHeaders({
@@ -21,7 +21,7 @@ export class GameService {
     });
 
     return this.http
-      .post<any>(this.apiUrl, { code: gameCode }, { headers })
+      .post<any>(this.apiUrl, { code: gameCode, language: language }, { headers })
       .pipe(
         tap((response) => {
           return response;

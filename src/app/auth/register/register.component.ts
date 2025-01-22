@@ -68,7 +68,7 @@ export default class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     this.loadingService.showLoading();
-    this.authService.register(this.registerUser).subscribe({
+    this.authService.register(this.registerUser, this.storageService.getItem() || 'es').subscribe({
       next: (response) =>{
         this.loadingService.hideLoading();
         this.alertService.showAlert(response.message, false);

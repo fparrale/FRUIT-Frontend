@@ -173,6 +173,7 @@ export default class CreateGameRoomComponent implements OnInit {
       const body: GameRoomRnf = {
         expiration_date: this.fullDateTime,
         questions: this.listRnf,
+        language: this.storageService.getItem() || 'es',
       };
 
       this.loadingService.showLoading();

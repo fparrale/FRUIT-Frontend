@@ -22,8 +22,14 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  login(credentials: Credentials): Observable<any> {
-    return this.http.post<any>(this.apiUrlLogin, credentials).pipe(
+  login(credentials: Credentials, language:string): Observable<any> {
+    return this.http.post<any>(this.apiUrlLogin,
+      {
+        email: credentials.email,
+        password: credentials.password,
+        language: language
+      }
+    ).pipe(
       tap((response) => {
         this.setUserData(response.data);
       }),
@@ -35,11 +41,22 @@ export class AuthService {
     );
   }
 
-  register(body: RegisterUser): Observable<any> {
+  register(body: RegisterUser, language:string): Observable<any> {
     body.username = body.email;
     body.role = Number(body.role);
     body.birth_date = this.formatDate(new Date());
-    return this.http.post<any>(this.apiUrlRegister, body).pipe(
+    return this.http.post<any>(this.apiUrlRegister,
+      {
+        name: body.name,
+        last_name: body.last_name,
+        username: body.email,
+        email: body.email,
+        password: body.password,
+        role: body.role,
+        birth_date: body.birth_date,
+        language: language
+      }
+    ).pipe(
       tap((response) => {
        return response;
       }),
@@ -64,8 +81,13 @@ export class AuthService {
     );
   }
 
-  passwordSendCode(body: SendCode): Observable<any> {
-    return this.http.post<any>(this.apiUrlSendCode, body).pipe(
+  passwordSendCode(body: SendCode, language: string): Observable<any> {
+    return this.http.post<any>(this.apiUrlSendCode,
+      {
+        email: body.email,
+        language: language
+      }
+    ).pipe(
       tap((response) => {
        return response;
       }),
@@ -77,8 +99,16 @@ export class AuthService {
     );
   }
 
-  passwordReset(body: PasswordReset): Observable<any> {
-    return this.http.post<any>(this.apiUrlPasswordReset, body).pipe(
+  passwordReset(body: PasswordReset, language: string): Observable<any> {
+    return this.http.post<any>(this.apiUrlPasswordReset,
+      {
+        email: body.email,
+        otp: body.otp,
+        password: body.password,
+        password_confirmation: body.password_confirmation,
+        language: language
+      }
+    ).pipe(
       tap((response) => {
        return response;
       }),

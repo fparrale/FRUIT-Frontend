@@ -7,6 +7,7 @@ import { createRnfGameRoomService, CreateRnfList } from '../interfaces/game-room
 import { LoadingService } from '../../shared/loading.service';
 import { AlertService } from '../../shared/alert.service';
 import { GameRoomsService } from '../services/game-rooms.service';
+import { StorageService } from '../../shared/storage.service';
 
 @Component({
   selector: 'app-edit-game-room',
@@ -52,7 +53,7 @@ export default class EditGameRoomComponent implements OnInit {
 
 
   constructor(private router: Router, private loadingService: LoadingService,
-      private alertService: AlertService, private gameRoomsService: GameRoomsService) {
+      private alertService: AlertService, private gameRoomsService: GameRoomsService, private storageService: StorageService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.questions = navigation.extras.state['questions'];
@@ -170,7 +171,8 @@ export default class EditGameRoomComponent implements OnInit {
 
       const body: any = {
               questions: this.listRnf,
-              questionId: this.indexQuestionId
+              questionId: this.indexQuestionId,
+              language: this.storageService.getItem() || 'es'
       };
 
       this.loadingService.showLoading();
@@ -214,6 +216,7 @@ export default class EditGameRoomComponent implements OnInit {
     const body = {
       gameRoomId: this.gameRoom.id,
       expirationDate: newExpirationDate,
+      language: this.storageService.getItem() || 'es'
     };
   
     this.loadingService.showLoading();
