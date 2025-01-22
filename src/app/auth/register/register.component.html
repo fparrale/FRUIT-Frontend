@@ -112,7 +112,7 @@
                     <div class="login-redirect text-center mt-4 text-sm text-gray-600">
                         <p>
                             {{ 'REGISTER.HAVE_ACCOUNT' | translate }}
-                            <a href="/login" class="text-[#0D92F4] font-medium hover:underline">{{'REGISTER.LOGIN' | translate}}</a>
+                            <a (click)="navigationToPage('/login')" class="text-[#0D92F4] font-medium hover:underline">{{'REGISTER.LOGIN' | translate}}</a>
                         </p>
                     </div>
 

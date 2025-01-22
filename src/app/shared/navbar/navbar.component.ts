@@ -66,6 +66,16 @@ export class NavbarComponent {
         }else{
           this.currentRouteName = ROUTE_NAMES_EN[currentRoute as keyof typeof ROUTE_NAMES_EN] || 'route';
         }
+
+        if(this.currentRouteName === 'route' || this.currentRouteName === 'ruta') {
+          const currentRoute = this.router.url.split('?')[0];
+        const baseRoute = currentRoute.split('/').slice(0, -1).join('/');
+        if(this.storageService.getItem() === 'es') {
+          this.currentRouteName = ROUTE_NAMES_ES[baseRoute as keyof typeof ROUTE_NAMES_ES] || 'ruta';
+        } else {
+          this.currentRouteName = ROUTE_NAMES_EN[baseRoute as keyof typeof ROUTE_NAMES_EN] || 'route';
+        }
+        }
       }
     });
 

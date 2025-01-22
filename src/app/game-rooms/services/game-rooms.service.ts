@@ -10,6 +10,9 @@ import { createRnfGameRoomService, GameRoomRnf } from '../interfaces/game-rooms'
 })
 export class GameRoomsService {
   private apiUrlGameRooms = environment.apiUrl + 'game/game-rooms';
+  private apiUrlGameRoomsOne = environment.apiUrl + 'questions/get-game-room';
+  private apiUrlGameRoomAndQuestionId = environment.apiUrl + 'questions/get-game-room-question';
+  private apiUrlGameRoomsQuestionEdit = environment.apiUrl + 'game/edit-room-game-question';
   private apiurlDeleteGameRoom = environment.apiUrl + 'game/delete-game-room';
   private apiurlUploadExcel = environment.apiUrl + 'question/UploadQuestion';
   private apiUrlGenerateReportGameRoom = environment.apiUrl + 'report/generate-report-teacher-game-room';
@@ -39,6 +42,54 @@ export class GameRoomsService {
           );
         })
       );
+  }
+
+  getGameRoomQuestions(room_id: number): Observable<any> {
+    const userData = this.authService.getUserData();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${userData?.access_token}`,
+    });
+
+    return this.http
+      .post<any>(this.apiUrlGameRoomsOne, {room_id},{ headers })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(
+            () =>
+              new Error(
+                error.error.message || 'Ocurrio un error intentalo mas tarde'
+              )
+          );
+        })
+      );;
+  }
+
+  getGameRoomQuestionsAndQuestionId(room_id: number, question_id: number): Observable<any> {
+    const userData = this.authService.getUserData();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${userData?.access_token}`,
+    });
+
+    return this.http
+      .post<any>(this.apiUrlGameRoomAndQuestionId, {room_id, question_id},{ headers })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(
+            () =>
+              new Error(
+                error.error.message || 'Ocurrio un error intentalo mas tarde'
+              )
+          );
+        })
+      );;
   }
 
   deleteGameRoom(game_room_id:number,status:boolean): Observable<any> {
@@ -143,6 +194,30 @@ export class GameRoomsService {
 
     return this.http
       .post<any>(this.apiUrlCreateGameRoom, body,{ headers })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(
+            () =>
+              new Error(
+                error.error.message || 'Ocurrio un error intentalo mas tarde'
+              )
+          );
+        })
+      );
+  }
+
+  editGameRoomQuestion(body: any): Observable<any> {
+    const userData = this.authService.getUserData();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${userData?.access_token}`,
+    });
+
+    return this.http
+      .post<any>(this.apiUrlGameRoomsQuestionEdit, body,{ headers })
       .pipe(
         tap((response) => {
           return response;

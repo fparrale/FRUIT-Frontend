@@ -9,6 +9,7 @@ import * as XLSX from 'xlsx';
 import * as Papa from 'papaparse';
 import { createRnfGameRoomService } from './interfaces/game-rooms';
 import { TranslateModule } from '@ngx-translate/core';
+import { Questions } from '../questions/interfaces/Questions';
 
 
 @Component({
@@ -27,6 +28,7 @@ export default class GameRoomsComponent implements OnInit{
   currentPage = 1;
   itemsPerPage = 5;
   selectedFile: File | null = null;
+  questions: Questions[] = [];
 
   listRnf: Array<createRnfGameRoomService> = [];
 
@@ -78,7 +80,20 @@ export default class GameRoomsComponent implements OnInit{
   }
 
   onEdit(gameRooms: any) {
-    console.log('onEdit', gameRooms.id);
+    this.loadingService.showLoading();
+    this.gameRoomsService.getGameRoomQuestions(gameRooms.id).subscribe({
+      next: (response) => {
+        this.loadingService.hideLoading();
+        this.questions = response.questions;
+        this.router.navigate(['/edit-game-room', gameRooms.id], {
+          state: { questions: this.questions, gameRoom: gameRooms }
+        });
+      },
+      error: (error) => {
+        this.loadingService.hideLoading();
+        this.alertService.showAlert(error.message, true);
+      }
+    });
   }
 
   transformExcelToCsv(file: File): Promise<string> {
