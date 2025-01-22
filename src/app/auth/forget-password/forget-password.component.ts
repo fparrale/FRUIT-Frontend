@@ -89,4 +89,8 @@ export default class ForgetPasswordComponent implements OnInit{
   togglePasswordConfirmationVisibility(): void {
     this.showPasswordConfirmation = !this.showPasswordConfirmation;
   }
+
+  navigationToPage(route: string): void {
+    this.router.navigate([route]);
+  }
 }

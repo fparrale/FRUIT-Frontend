@@ -80,4 +80,8 @@ export default class RegisterComponent implements OnInit {
       },
     });
   }
+
+  navigationToPage(route: string): void {
+    this.router.navigate([route]);
+  }
 }

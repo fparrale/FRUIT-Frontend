@@ -64,6 +64,11 @@ export const routes: Routes = [
         loadComponent: () => import('./game-rooms/game-rooms.component'),
         canActivate: [AuthGuard, roleTeacherGuard],
       },
+      { 
+        path: 'edit-game-room/:id', 
+        loadComponent: () => import('./game-rooms/edit-game-room/edit-game-room.component'),
+        canActivate: [AuthGuard, roleTeacherGuard],
+      },
       { path: 'create-game-room', 
         loadComponent: () => import('./game-rooms/create-game-room/create-game-room.component'),
         canActivate: [AuthGuard, roleTeacherGuard],
