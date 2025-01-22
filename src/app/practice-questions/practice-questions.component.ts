@@ -53,7 +53,6 @@ export class PracticeQuestionsComponent {
     let totalSteps = 0;
 
     if(gameDataParams != null){
-      console.log("gameDataParamsd");
       this.questions = gameDataParams;
       this.questionsTransformed = this.transformQuestions(this.questions);
       this.question = this.questionsTransformed[this.questionIndex];
@@ -61,7 +60,6 @@ export class PracticeQuestionsComponent {
       this.totalScoreCompleted = 100 / totalSteps;
     }else{
       const dataGameStorage = this.gameDataParamsService.getGamePracticeDataLocalStorage();
-      console.log(dataGameStorage);
 
       if(dataGameStorage != null){
         console.log("dataGameStorage");

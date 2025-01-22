@@ -8,7 +8,8 @@ export const ROUTE_NAMES_ES = {
     '/game-rooms': 'Salas de Juego',
     '/report': 'Reporte',
     '/create-game-room': 'Crear Sala de Juego',
-    '/practice-game': 'Sala de practica'
+    '/practice-game': 'Sala de practica',
+    '/edit-game-room': 'Editar Sala de Juego'
   };
   
   export const ROUTE_NAMES_EN = {
@@ -21,6 +22,7 @@ export const ROUTE_NAMES_ES = {
     '/game-rooms': 'Game Rooms',
     '/report': 'Report',
     '/create-game-room': 'Create Game Room',
-    '/practice-game': 'Practice Room'
+    '/practice-game': 'Practice Room',
+    '/edit-game-room': 'Edit Game Room'
   };
   
