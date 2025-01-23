@@ -85,7 +85,9 @@
   "TABLE": {
     "CODE": "CODE",
     "SCORE": "SCORE",
+    "FULL_NAME": "FULL NAMES",
     "DURATION": "DURATION",
+    "ANSWERS" : "Answers",
     "CREATION_DATE": "CREATION DATE",
     "EXPIRATION_DATE": "EXPIRATION DATE",
     "STATUS": "STATUS",
@@ -94,7 +96,8 @@
     "LINGUISTIC_VALUE": "Linguistic Value",
     "LINGUISTIC_RECOMMENDATION": "Recommendation",
     "OTHER_LINGUISTIC_VALUES": "Other Linguistic Values",
-    "VALUES": "Values"
+    "VALUES": "Values",
+    "VIEW_ANSWERS": "View Answers"
   },
   "BUTTON_NAVIGATION_TABLE": {
     "NEXT": "Next",
@@ -176,7 +179,8 @@
     "EXCEL_FILE": "Download Excel Example",
     "ASSET": "Asset",
     "IDLE": "Idle",
-    "ELIMINATED": "Eliminate"
+    "ELIMINATED": "Eliminate",
+    "PLAYER_HISTORY": "Player History"
   },
   "CREATE_GAME_ROOM": {
     "MODAL_EDIT_CREATE_RNF": {
@@ -215,5 +219,11 @@
   },
   "REPORT": {
     "GENERATE_REPORT": "Generate report"
+  },
+  "EDIT_GAME_ROOM":{
+    "DATE_EXPIRATION_BUTTON": "Change expiration date"
+  },
+  "QUESTION":{
+    "NFR": "NFR"
   }
 }

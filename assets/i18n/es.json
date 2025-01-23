@@ -85,7 +85,9 @@
   "TABLE": {
     "CODE": "CODIGO",
     "SCORE": "PUNTAJE",
+    "FULL_NAME": "NOMBRES COMPLETOS",
     "DURATION": "DURACION",
+    "ANSWERS": "Respuestas",
     "CREATION_DATE": "FECHA DE CREACIÓN",
     "EXPIRATION_DATE": "FECHA DE EXPIRACIÓN",
     "STATUS": "ESTADO",
@@ -94,7 +96,8 @@
     "LINGUISTIC_VALUE": "Valor Lingüístico",
     "LINGUISTIC_RECOMMENDATION": "Recomendación",
     "OTHER_LINGUISTIC_VALUES": "Otros Valores Lingüísticos",
-    "VALUES": "Valores"
+    "VALUES": "Valores",
+    "VIEW_ANSWERS": "Ver Respuestas"
   },
   "BUTTON_NAVIGATION_TABLE": {
     "NEXT": "Siguiente",
@@ -176,7 +179,8 @@
     "EXCEL_FILE": "Descargar ejemplo de Excel",
     "ASSET": "Activo",
     "IDLE": "Inactivo",
-    "ELIMINATED": "Eliminar"
+    "ELIMINATED": "Eliminar",
+    "PLAYER_HISTORY": "Historial de Jugadores"
   },
   "CREATE_GAME_ROOM": {
     "MODAL_EDIT_CREATE_RNF": {
@@ -215,5 +219,11 @@
   },
   "REPORT": {
     "GENERATE_REPORT": "Generar reporte"
+  },
+  "EDIT_GAME_ROOM":{
+    "DATE_EXPIRATION_BUTTON": "Cambiar fecha de expiración"
+  },
+  "QUESTION":{
+    "NFR": "RNF"
   }
 }
