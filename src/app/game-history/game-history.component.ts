@@ -5,6 +5,7 @@ import { LoadingService } from '../shared/loading.service';
 import { Router } from '@angular/router';
 import { GameHistoryService } from './services/game-history.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AnsweredQuestion } from '../participants-list/participants-list.component';
 
 @Component({
   selector: 'app-game-history',
@@ -18,6 +19,9 @@ export default class GameHistoryComponent implements OnInit {
   paginatedData: any[] = [];
   currentPage = 1;
   itemsPerPage = 5;
+
+  showModal: boolean = false;
+  selectedAnswers: AnsweredQuestion[] = [];
 
   constructor(
     private gameHistoryService: GameHistoryService,
@@ -71,5 +75,15 @@ export default class GameHistoryComponent implements OnInit {
 
   get totalPages(): number {
     return Math.ceil(this.gameHistory.length / this.itemsPerPage);
+  }
+
+  openAnswersModal(answers: any[]): void {
+    this.selectedAnswers = answers;
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+    this.selectedAnswers = [];
   }
 }
