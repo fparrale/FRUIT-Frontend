@@ -177,6 +177,7 @@ export default class GameHistoryComponent implements OnInit {
   
       iframe.onload = () => {
         iframe.contentWindow?.print();
+        document.title = 'FRUIT';
         document.body.removeChild(iframe);
       };
     } else {

@@ -205,6 +205,7 @@ export default class ParticipantsListComponent implements OnInit {
   
       iframe.onload = () => {
         iframe.contentWindow?.print();
+        document.title = 'FRUIT';
         document.body.removeChild(iframe);
       };
     } else {
