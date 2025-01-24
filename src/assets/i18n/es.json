@@ -215,7 +215,8 @@
   "ALERT": {
     "SUCCESS": "Mensaje de éxito",
     "ERROR": "Mensaje de error",
-    "BUTTON_CLOSE": "Cerrar"
+    "BUTTON_CLOSE": "Cerrar",
+    "PRINT": "Imprimir"
   },
   "REPORT": {
     "GENERATE_REPORT": "Generar reporte"
