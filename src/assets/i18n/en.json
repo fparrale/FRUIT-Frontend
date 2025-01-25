@@ -176,7 +176,12 @@
     "EXCEL_FILE": "Download Excel Example",
     "ASSET": "Asset",
     "IDLE": "Idle",
-    "ELIMINATED": "Eliminate"
+    "ELIMINATED": "Eliminate",
+    "SEARCH_PLACEHOLDER": "Search by code...",
+    "SORT_BY_CODE": "Sort by Code",
+    "SORT_BY_DATE": "Sort by Date",
+    "SEARCH_PLACEHOLDER_RNF": "Search by rnf...",
+    "SORT_BY_RNF": "Sort by Rnf"
   },
   "CREATE_GAME_ROOM": {
     "MODAL_EDIT_CREATE_RNF": {

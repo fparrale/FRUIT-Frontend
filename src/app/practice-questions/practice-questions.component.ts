@@ -62,7 +62,6 @@ export class PracticeQuestionsComponent {
       const dataGameStorage = this.gameDataParamsService.getGamePracticeDataLocalStorage();
 
       if(dataGameStorage != null){
-        console.log("dataGameStorage");
         this.questions = dataGameStorage;
         this.questionsTransformed = this.transformQuestions(this.questions);
         this.question = this.questionsTransformed[this.questionIndex];

@@ -31,7 +31,6 @@ export default class ForgetPasswordComponent implements OnInit{
   ngOnInit(): void {
     const language = this.storageService.getItem();
     if (language) {
-      console.log(language);
       this.translate.use(language);
     }
   }

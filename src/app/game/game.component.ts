@@ -31,8 +31,7 @@ export default class GameComponent implements OnInit{
     private storageService: StorageService
   ) {
     this.route.queryParams.subscribe((params) => {
-      this.mode = params['mode']; // Puede ser 'find' o 'practice'
-      console.log(`Game mode: ${this.mode}`);
+      this.mode = params['mode'];
     });
   }
   ngOnInit(): void {

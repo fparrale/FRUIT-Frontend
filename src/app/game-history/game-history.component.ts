@@ -5,11 +5,12 @@ import { LoadingService } from '../shared/loading.service';
 import { Router } from '@angular/router';
 import { GameHistoryService } from './services/game-history.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game-history',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, FormsModule],
   templateUrl: './game-history.component.html',
   styleUrl: './game-history.component.css'
 })
@@ -18,6 +19,11 @@ export default class GameHistoryComponent implements OnInit {
   paginatedData: any[] = [];
   currentPage = 1;
   itemsPerPage = 5;
+
+  searchTerm: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortField: 'code' | 'createdAt' = 'code';
+  filteredGameRooms: any[] = [];
 
   constructor(
     private gameHistoryService: GameHistoryService,
@@ -35,6 +41,7 @@ export default class GameHistoryComponent implements OnInit {
       next: (response) => {
         this.loadingService.hideLoading();
         this.gameHistory = response.data;
+        this.filteredGameRooms = [...this.gameHistory];
         this.updatePagination();
       },
       error: (error) => {
@@ -47,7 +54,7 @@ export default class GameHistoryComponent implements OnInit {
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedData = this.gameHistory.slice(startIndex, endIndex);
+    this.paginatedData = this.filteredGameRooms.slice(startIndex, endIndex);
   }
 
   goToPage(page: number) {
@@ -70,6 +77,62 @@ export default class GameHistoryComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.gameHistory.length / this.itemsPerPage);
+    return Math.ceil(this.filteredGameRooms.length / this.itemsPerPage);
+  }
+
+  searchGameRooms(): void {
+    this.filteredGameRooms = this.gameHistory.filter(room => {
+      const roomCode = (room.game_room?.code || room.code || '').toLowerCase();
+      return roomCode.includes(this.searchTerm.toLowerCase());
+    });
+    this.sortGameRooms();
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  // Add sort method
+  sortGameRooms(): void {
+    const DEFAULT_DATE = '1969-12-31T19:00:00';
+    this.filteredGameRooms.sort((a, b) => {
+      if (this.sortField === 'code') {
+        const valueA = (a.game_room?.code || a.code || '').toLowerCase();
+        const valueB = (b.game_room?.code || b.code || '').toLowerCase();
+        return this.sortDirection === 'asc' ? 
+          valueA.localeCompare(valueB) : 
+          valueB.localeCompare(valueA);
+      } else {
+        const dateStrA = a.created_at || a.createdAt || DEFAULT_DATE;
+        const dateStrB = b.created_at || b.createdAt || DEFAULT_DATE;
+        
+        if (!dateStrA || !dateStrB) {
+          console.warn('Using default date for missing field:', { a, b });
+        }
+
+        const dateA = new Date(dateStrA).getTime();
+        const dateB = new Date(dateStrB).getTime();
+        
+        if (isNaN(dateA) || isNaN(dateB)) {
+          console.error('Invalid date format, using default:', { dateA, dateB });
+          return 0;
+        }
+
+        return this.sortDirection === 'asc' ? 
+          dateA - dateB : 
+          dateB - dateA;
+        }
+    });
+    this.updatePagination();
+  }
+
+  toggleSort(field: 'code' | 'createdAt'): void {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
+    
+    this.sortGameRooms();
+    this.updatePagination();
   }
 }

@@ -301,7 +301,6 @@ export default class CreateGameRoomComponent implements OnInit {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          console.log('Raw data:', result.data);
           this.listRnf = result.data.map((item: any) => ({
             nfr: item.RNF || '',
             variable: item.linguistic_variable || '',
@@ -314,7 +313,6 @@ export default class CreateGameRoomComponent implements OnInit {
             validar: item.weights || ''
           }));
           this.loadingService.hideLoading();
-          console.log('Parsed data:', this.listRnf);
         },
         error: (error: any) => {
           this.alertService.showAlert('Error al procesar el archivo CSV', true);

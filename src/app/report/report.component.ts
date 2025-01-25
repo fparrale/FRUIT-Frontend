@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { json } from 'node:stream/consumers';
 import { TranslateModule } from '@ngx-translate/core';
 import { StorageService } from '../shared/storage.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-report',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, FormsModule],
   templateUrl: './report.component.html',
   styleUrl: './report.component.css'
 })
@@ -20,6 +21,10 @@ export default class ReportComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   selectedFile: File | null = null;
+  searchTerm: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortField: 'code' | 'createdAt' = 'code';
+  filteredGameRooms: any[] = [];
 
   constructor(
     private gameRoomsService: GameRoomsService,
@@ -38,6 +43,7 @@ export default class ReportComponent implements OnInit {
       next: (response) => {
         this.loadingService.hideLoading();
         this.gameRooms = response.data;
+        this.filteredGameRooms = [...this.gameRooms];
         this.updatePagination();
       },
       error: (error) => {
@@ -78,7 +84,7 @@ export default class ReportComponent implements OnInit {
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedData = this.gameRooms.slice(startIndex, endIndex);
+    this.paginatedData = this.filteredGameRooms.slice(startIndex, endIndex);
   }
 
   goToPage(page: number) {
@@ -101,9 +107,9 @@ export default class ReportComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.gameRooms.length / this.itemsPerPage);
+    return Math.ceil(this.filteredGameRooms.length / this.itemsPerPage);
   }
-
+  
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
@@ -115,5 +121,61 @@ export default class ReportComponent implements OnInit {
       second: '2-digit',
     };
     return date.toLocaleDateString('es-ES', options).replace(',', '');
+  }
+
+  searchGameRooms(): void {
+    this.filteredGameRooms = this.gameRooms.filter(room => 
+      room.code.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.sortGameRooms();
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  // Add sort method
+  sortGameRooms(): void {
+    const DEFAULT_DATE = '1969-12-31T19:00:00';
+    this.filteredGameRooms.sort((a, b) => {
+      if (this.sortField === 'code') {
+        const valueA = a.code.toLowerCase();
+        const valueB = b.code.toLowerCase();
+        return this.sortDirection === 'asc' ? 
+          valueA.localeCompare(valueB) : 
+          valueB.localeCompare(valueA);
+      } else {
+
+        const dateStrA = a.created_at || a.createdAt || DEFAULT_DATE;
+        const dateStrB = b.created_at || b.createdAt || DEFAULT_DATE;
+        
+        if (!dateStrA || !dateStrB) {
+          console.warn('Using default date for missing field:', { a, b });
+        }
+
+        const dateA = new Date(dateStrA).getTime();
+        const dateB = new Date(dateStrB).getTime();
+        
+        if (isNaN(dateA) || isNaN(dateB)) {
+          console.error('Invalid date format, using default:', { dateA, dateB });
+          return 0;
+        }
+
+        return this.sortDirection === 'asc' ? 
+          dateA - dateB : 
+          dateB - dateA;
+        }
+    });
+    this.updatePagination();
+  }
+
+  toggleSort(field: 'code' | 'createdAt'): void {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
+    
+    this.sortGameRooms();
+    this.updatePagination();
   }
 }

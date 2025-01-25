@@ -58,12 +58,9 @@ export default class LoginComponent implements OnInit{
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent): void {
-    // console.log('click');
     const clickedInside = this.el.nativeElement.contains(event.target);
     const clickedElement = event.target as HTMLElement;
-    // console.log(clickedElement);
     const clickedElementId = clickedElement.id;
-    // console.log('ID del elemento clickeado:', clickedElementId);
     if (
       clickedElementId !== 'language-menu-svg' &&
       clickedElementId !== 'language-menu-button' &&
@@ -109,10 +106,8 @@ export default class LoginComponent implements OnInit{
   }
 
   changeLanguage(lang: string): void {
-    //console.log('Cambiando idioma a:', lang);
     this.translate.use(lang); // Cambia el idioma
     this.storageService.setItem(lang); // Guarda el idioma en el localStorage
-    //this.setLanguageUserStorage(lang); // Guarda el idioma en el localStorage
     this.isLanguageMenuOpen = false; // Cierra el menú
   }
 
