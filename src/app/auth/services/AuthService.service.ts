@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
@@ -16,6 +16,7 @@ export class AuthService {
   private apiUrlRoles = environment.apiUrl + 'auth/roles';
   private apiUrlSendCode = environment.apiUrl + 'change-password/send-otp';
   private apiUrlPasswordReset = environment.apiUrl + 'change-password/reset-otp';
+  private apiUrlUsers = environment.apiUrl + 'users/list';
   //private currentUser: UserData | null = null;
   private userDataKey = 'userData';
 
@@ -164,5 +165,29 @@ export class AuthService {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+
+  getUsers(): Observable<any> {
+      const userData = this.getUserData();
+  
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${userData?.access_token}`,
+      });
+  
+      return this.http
+        .get<any>(this.apiUrlUsers, { headers })
+        .pipe(
+          tap((response) => {
+            return response;
+          }),
+          catchError((error) => {
+            return throwError(
+              () =>
+                new Error(
+                  error.error.message || 'Ocurrio un error intentalo mas tarde'
+                )
+            );
+          })
+        );
+    }
   
 }

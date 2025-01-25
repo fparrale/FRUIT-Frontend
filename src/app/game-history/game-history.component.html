@@ -94,6 +94,7 @@
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.CODE' | translate }}</th>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.SCORE' | translate }}</th>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.DURATION' | translate }}</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.ACTIONS' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -106,6 +107,11 @@
                 {{ game.score }} / 100
               </td>
               <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.duration }}</td>
+              <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">  <button 
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                (click)="openAnswersModal(game.answered_questions, game)">
+                {{ 'TABLE.VIEW_ANSWERS' | translate }}
+            </button></td>
             </tr>
           </tbody>
         </table>

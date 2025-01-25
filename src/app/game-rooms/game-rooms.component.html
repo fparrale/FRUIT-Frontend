@@ -194,6 +194,11 @@
                                     class="px-2 py-1 text-xs font-medium text-white bg-[#C62E2E] rounded hover:bg-red-700 focus:outline-none">
                                     {{('GAME_ROOM.ELIMINATED' | translate)}}
                                 </button>
+                                <button
+                                (click)="onHistoryPlayers(gameRooms.id)"
+                                    class="px-2 py-1 text-xs font-medium text-white bg-[#6C757D] rounded hover:bg-[#6C757D] focus:outline-none">
+                                    {{('GAME_ROOM.PLAYER_HISTORY' | translate)}}
+                                </button>
                             </div>
                         </td>
                     </tr>

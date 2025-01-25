@@ -85,7 +85,9 @@
   "TABLE": {
     "CODE": "CODIGO",
     "SCORE": "PUNTAJE",
+    "FULL_NAME": "NOMBRES COMPLETOS",
     "DURATION": "DURACION",
+    "ANSWERS": "Respuestas",
     "CREATION_DATE": "FECHA DE CREACIÓN",
     "EXPIRATION_DATE": "FECHA DE EXPIRACIÓN",
     "STATUS": "ESTADO",
@@ -94,7 +96,8 @@
     "LINGUISTIC_VALUE": "Valor Lingüístico",
     "LINGUISTIC_RECOMMENDATION": "Recomendación",
     "OTHER_LINGUISTIC_VALUES": "Otros Valores Lingüísticos",
-    "VALUES": "Valores"
+    "VALUES": "Valores",
+    "VIEW_ANSWERS": "Ver Respuestas"
   },
   "BUTTON_NAVIGATION_TABLE": {
     "NEXT": "Siguiente",
@@ -181,7 +184,8 @@
     "SORT_BY_CODE": "Ordenar por Código",
     "SORT_BY_DATE": "Ordenar por Fecha",
     "SEARCH_PLACEHOLDER_RNF": "Buscar por rnf...",
-    "SORT_BY_RNF": "Ordenar por Rnf"
+    "SORT_BY_RNF": "Ordenar por Rnf",
+    "PLAYER_HISTORY": "Historial de Jugadores"
   },
   "CREATE_GAME_ROOM": {
     "MODAL_EDIT_CREATE_RNF": {
@@ -216,12 +220,16 @@
   "ALERT": {
     "SUCCESS": "Mensaje de éxito",
     "ERROR": "Mensaje de error",
-    "BUTTON_CLOSE": "Cerrar"
+    "BUTTON_CLOSE": "Cerrar",
+    "PRINT": "Imprimir"
   },
   "REPORT": {
     "GENERATE_REPORT": "Generar reporte"
   },
   "EDIT_GAME_ROOM":{
     "DATE_EXPIRATION_BUTTON": "Cambiar fecha de expiración"
+  },
+  "QUESTION":{
+    "NFR": "RNF"
   }
 }

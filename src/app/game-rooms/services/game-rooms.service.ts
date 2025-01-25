@@ -18,6 +18,7 @@ export class GameRoomsService {
   private apiUrlGenerateReportGameRoom = environment.apiUrl + 'report/generate-report-teacher-game-room';
   private apiUrlCreateGameRoom = environment.apiUrl + 'game/create-room-game-questions';
   private apiurlEditGameRoom = environment.apiUrl + 'game/edit-game-room';
+  private apiUrlParticipatingPlayersByGameRoom = environment.apiUrl + 'game/get-participating-players';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -257,4 +258,29 @@ export class GameRoomsService {
         })
       );
   }
+
+  getParticipatingPlayersByGameRoom(gameRoomId: number): Observable<any> {
+    const userData = this.authService.getUserData();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${userData?.access_token}`,
+    });
+
+    return this.http
+      .post<any>(this.apiUrlParticipatingPlayersByGameRoom, {gameRoomId},{ headers })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(
+            () =>
+              new Error(
+                error.error.message || 'Ocurrio un error intentalo mas tarde'
+              )
+          );
+        })
+      );;
+  }
+
 }

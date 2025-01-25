@@ -295,4 +295,21 @@ export default class GameRoomsComponent implements OnInit{
     this.sortGameRooms();
     this.updatePagination();
   }
+
+  onHistoryPlayers(gameRoomId: number) {
+    this.router.navigate(['/get-participating-players', gameRoomId]);
+    // this.loadingService.showLoading();
+    // this.gameRoomsService.getParticipatingPlayersByGameRoom(gameRoomId).subscribe({
+    //   next: (response) => {
+    //     this.loadingService.hideLoading();
+    //     this.router.navigate(['/get-participating-players'], {
+    //       state: { data: response.data }
+    //     });
+    //   },
+    //   error: (error) => {
+    //     this.loadingService.hideLoading();
+    //     this.alertService.showAlert(error.message, true);
+    //   }
+    // });
+  }
 }

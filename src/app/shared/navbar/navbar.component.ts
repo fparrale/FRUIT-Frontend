@@ -81,12 +81,18 @@ export class NavbarComponent {
 
     // Configurar el nombre inicial si ya hay una ruta activa al cargar
     const initialRoute = this.router.url.split('?')[0] || '/home';
+    const staticRoute = this.getStaticRoute(initialRoute);
     if(this.storageService.getItem() === 'es') {
-      this.currentRouteName = ROUTE_NAMES_ES[initialRoute as keyof typeof ROUTE_NAMES_ES] || 'b';
+      this.currentRouteName = ROUTE_NAMES_ES[staticRoute  as keyof typeof ROUTE_NAMES_ES] || 'b';
     }else{
-      this.currentRouteName = ROUTE_NAMES_EN[initialRoute as keyof typeof ROUTE_NAMES_EN] || 'a';
+      this.currentRouteName = ROUTE_NAMES_EN[staticRoute  as keyof typeof ROUTE_NAMES_EN] || 'a';
     }
     
+  }
+
+  getStaticRoute(route: string): string {
+    const staticRoute = route.split('/')[1];
+    return `/${staticRoute}`;
   }
 
   getUserAuthenticaded():void {
