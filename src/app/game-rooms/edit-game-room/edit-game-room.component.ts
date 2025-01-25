@@ -49,7 +49,14 @@ export default class EditGameRoomComponent implements OnInit {
   hours: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
   minutes: string[] = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
+  paginatedData: any[] = [];
+  currentPage = 1;
+  itemsPerPage = 5;
 
+  searchTerm: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortField: 'nfr' | 'id' = 'nfr';
+  filteredGameRooms: any[] = [];
 
 
   constructor(private router: Router, private loadingService: LoadingService,
@@ -63,7 +70,7 @@ export default class EditGameRoomComponent implements OnInit {
 
   ngOnInit() {
     if (!this.questions || !this.gameRoom) {
-      this.router.navigate(['/game-rooms']); // Ajusta la ruta según tu necesidad
+      this.router.navigate(['/game-rooms']); 
     }else{
       const [date, time] = this.gameRoom["expiration_date"].split(' ');
       const [hour, minute] = time.split(':');
@@ -71,6 +78,9 @@ export default class EditGameRoomComponent implements OnInit {
       this.selectedHour = hour;
       this.selectedMinute = minute;
     }
+
+    this.filteredGameRooms = [...this.questions];
+    this.updatePagination();
   }
 
   onEdit(gameRooms: any) {
@@ -234,4 +244,72 @@ export default class EditGameRoomComponent implements OnInit {
     });
   }
 
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedData = this.filteredGameRooms.slice(startIndex, endIndex);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updatePagination();
+  }
+
+  nextPage() {
+    if (this.currentPage * this.itemsPerPage < this.questions.length) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredGameRooms.length / this.itemsPerPage);
+  }
+
+  searchGameRooms(): void {
+    this.filteredGameRooms = this.questions.filter(room => 
+      room.nfr.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.sortGameRooms();
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  sortGameRooms(): void {
+    this.filteredGameRooms.sort((a, b) => {
+      if (this.sortField === 'nfr') {
+      const valueA = a.nfr.toLowerCase();
+      const valueB = b.nfr.toLowerCase();
+      return this.sortDirection === 'asc' ? 
+        valueA.localeCompare(valueB) : 
+        valueB.localeCompare(valueA);
+      } else if (this.sortField === 'id') {
+      return this.sortDirection === 'asc' ? 
+        a.id - b.id : 
+        b.id - a.id;
+      }
+      return 0;
+    });
+    this.updatePagination();
+    }
+
+  toggleSort(field: 'nfr' | 'id'): void {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
+    
+    this.sortGameRooms();
+    this.updatePagination();
+  }
 }

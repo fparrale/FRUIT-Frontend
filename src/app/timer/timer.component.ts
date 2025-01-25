@@ -44,7 +44,6 @@ export class TimerComponent implements OnInit, OnDestroy {
   }
 
   resetTimer() {
-    console.log('reset timer');
     this.stopTimer();
     this.timeRemaining = this.duration;
     this.startTimer();

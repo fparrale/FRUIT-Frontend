@@ -115,7 +115,6 @@ export default class QuestionsComponent implements OnInit {
 
     this.againQuestionSubscription =
       this.questionService.againQuestion$.subscribe((res) => {
-        console.log('againQuestion$ called');
         this.againQuestion();
       });
   }
@@ -190,7 +189,6 @@ export default class QuestionsComponent implements OnInit {
       this.showQuestion();
     } else {
       this.showConfirmationModal = true;
-      console.log('Respuestas completadas:', this.completedAnswers);
       //this.alertService.showAlert('¡Has terminado el juego!', false);
     }
   }

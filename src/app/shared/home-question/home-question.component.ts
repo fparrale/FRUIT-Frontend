@@ -30,13 +30,11 @@ export default class HomeQuestionComponent implements OnInit {
   }
 
   findGame(option: string) {
-    console.log('Find Game clicked');
     this.router.navigate(['/game']);
     localStorage.setItem('gameOption', option);
     this.router.navigate(['/game'], {
       queryParams: { mode: option }, 
     });
-    console.log(option);
   }
 
   canShowItemTeacher(): boolean {
