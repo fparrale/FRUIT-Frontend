@@ -179,6 +179,7 @@
             <tr>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">Id</th>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.CODE' | translate }}</th>
+              <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.CREATION_DATE' | translate }}</th>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.SCORE' | translate }}</th>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.DURATION' | translate }}</th>
               <th class="px-4 py-3 text-left text-sm font-medium uppercase tracking-wider whitespace-nowrap">{{ 'TABLE.ACTIONS' | translate }}</th>
@@ -189,6 +190,7 @@
             <tr *ngFor="let game of paginatedData" class="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200">
               <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.id }}</td>
               <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.game_room.code }}</td>
+              <td class="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">{{ game.created_at }}</td>
               <td class="px-4 py-4 text-sm font-semibold"
                   [ngClass]="game.score >= 70 ? 'text-green-500' : 'text-red-500'">
                 {{ game.score }} / 100

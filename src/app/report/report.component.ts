@@ -23,7 +23,7 @@ export default class ReportComponent implements OnInit {
   selectedFile: File | null = null;
   searchTerm: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
-  sortField: 'code' | 'createdAt' = 'code';
+  sortField: 'code' | 'createdAt' | 'expirationAt'= 'code';
   filteredGameRooms: any[] = [];
 
   constructor(
@@ -142,7 +142,7 @@ export default class ReportComponent implements OnInit {
         return this.sortDirection === 'asc' ? 
           valueA.localeCompare(valueB) : 
           valueB.localeCompare(valueA);
-      } else {
+      } else if (this.sortField === 'createdAt') {
 
         const dateStrA = a.created_at || a.createdAt || DEFAULT_DATE;
         const dateStrB = b.created_at || b.createdAt || DEFAULT_DATE;
@@ -162,12 +162,27 @@ export default class ReportComponent implements OnInit {
         return this.sortDirection === 'asc' ? 
           dateA - dateB : 
           dateB - dateA;
-        }
+        } else if (this.sortField === 'expirationAt') {
+          const dateStrA = a.expiration_date || a.expirationAt || DEFAULT_DATE;
+          const dateStrB = b.expiration_date || b.expirationAt || DEFAULT_DATE;
+    
+          if (!dateStrA || !dateStrB) {
+            console.warn('Missing date field:', { a, b });
+            return 0;
+          }
+    
+          const dateA = new Date(dateStrA).getTime();
+          const dateB = new Date(dateStrB).getTime();
+    
+          return this.sortDirection === 'asc' ? 
+            dateA - dateB : 
+            dateB - dateA;
+      } 
     });
     this.updatePagination();
   }
 
-  toggleSort(field: 'code' | 'createdAt'): void {
+  toggleSort(field: 'code' | 'createdAt' | 'expirationAt'): void {
     if (this.sortField === field) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {

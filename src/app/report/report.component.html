@@ -48,6 +48,37 @@
             />
           </svg>
         </button>
+
+        <button 
+          (click)="toggleSort('expirationAt')" 
+          class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+        >
+          <span>{{ 'GAME_ROOM.SORT_BY_EXPIRATION' | translate }}</span>
+          <svg 
+            class="ml-2 h-5 w-5" 
+            [ngClass]="{
+              'transform rotate-180': sortField === 'expirationAt' && sortDirection === 'desc'
+            }"
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              *ngIf="sortField !== 'expirationAt'" 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+            />
+            <path 
+              *ngIf="sortField === 'expirationAt'" 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              [attr.d]="sortDirection === 'asc' ? 'M8 9l4-4 4 4' : 'M8 15l4 4 4-4'"
+            />
+          </svg>
+        </button>
   
         <button 
           (click)="toggleSort('createdAt')" 
