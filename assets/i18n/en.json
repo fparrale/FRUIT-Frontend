@@ -182,7 +182,8 @@
     "ELIMINATED": "Eliminate",
     "SEARCH_PLACEHOLDER": "Search by code...",
     "SORT_BY_CODE": "Sort by Code",
-    "SORT_BY_DATE": "Sort by Date",
+    "SORT_BY_DATE": "Sort by Creation Date",
+    "SORT_BY_EXPIRATION": "Sort by Expiration Date",
     "SEARCH_PLACEHOLDER_RNF": "Search by rnf...",
     "SORT_BY_RNF": "Sort by Rnf",
     "PLAYER_HISTORY": "Player History"
