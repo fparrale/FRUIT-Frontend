@@ -1,0 +1,18 @@
+{
+  "routes": [
+    "/",
+    "/create-game-room",
+    "/forget-password",
+    "/game",
+    "/game-history",
+    "/game-rooms",
+    "/home",
+    "/login",
+    "/practice-game",
+    "/quiz-game",
+    "/register",
+    "/report",
+    "/results",
+    "/users"
+  ]
+}
